@@ -10,34 +10,39 @@ import jakarta.persistence.*;
 public class Uebung {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "uebung_seq")
-    @SequenceGenerator(name = "uebung_seq", sequenceName = "uebung_seq", initialValue = 50)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(nullable = false)
     private String name;
+
+    @Column(columnDefinition = "TEXT")
     private String beschreibung;
+
+    @ManyToOne
+    @JoinColumn(name = "geraet_id")
+    private Geraet geraet;
+
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Muskelgruppe muskelgruppe;
 
-    public Uebung() {
-    }
+    // Konstruktoren
+    public Uebung() {}
 
-    public Uebung(String name, Muskelgruppe muskelgruppe, String beschreibung) {
+    public Uebung(String name, String beschreibung, Geraet geraet, Muskelgruppe muskelgruppe) {
         this.name = name;
         this.beschreibung = beschreibung;
+        this.geraet = geraet;
         this.muskelgruppe = muskelgruppe;
     }
 
-    public Uebung(String name, Muskelgruppe muskelgruppe ) {
-        this.name = name;
-        this.muskelgruppe = muskelgruppe;
-    }
-
-    public long getId() {
+    // Getter und Setter
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -57,27 +62,19 @@ public class Uebung {
         this.beschreibung = beschreibung;
     }
 
+    public Geraet getGeraet() {
+        return geraet;
+    }
+
+    public void setGeraet(Geraet geraet) {
+        this.geraet = geraet;
+    }
+
     public Muskelgruppe getMuskelgruppe() {
         return muskelgruppe;
     }
 
     public void setMuskelgruppe(Muskelgruppe muskelgruppe) {
         this.muskelgruppe = muskelgruppe;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null || getClass() != obj.getClass())
-            return false;
-
-        Uebung other = (Uebung) obj;
-        return Objects.equals(getId(), other.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId());
     }
 }

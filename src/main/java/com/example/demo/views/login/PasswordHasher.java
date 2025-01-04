@@ -11,7 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class PasswordHasher {
     public static void main(String[] args) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String rawPassword = "Hallo1234!";
+        String rawPassword = "yV@)A~=*3aT3dF|~>KY2";
         String encodedPassword = encoder.encode(rawPassword);
         System.out.println("Gehashtes Passwort: " + encodedPassword);
     }

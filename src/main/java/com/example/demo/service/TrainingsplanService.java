@@ -35,4 +35,5 @@ public class TrainingsplanService {
         List<Trainingsplan> list = this.repo.filterTrainingsplanByName(name);
         return list;
     }
+    
 }

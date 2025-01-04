@@ -1,0 +1,46 @@
+<html>
+<head>
+    <title>Geräteliste</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Geräteliste</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Beschreibung</th>
+                <th>Premium</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Testdaten, die durch Thymeleaf ersetzt werden -->
+            <tr th:each="geraet : ${geraete}">
+                <td th:text="${geraet.id}">1</td>
+                <td th:text="${geraet.name}">Testgerät</td>
+                <td th:text="${geraet.beschreibung}">Testbeschreibung</td>
+                <td th:text="${geraet.premium ? 'Ja' : 'Nein'}">Ja</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

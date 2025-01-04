@@ -31,24 +31,36 @@ import jakarta.annotation.security.PermitAll;
 @Uses(Icon.class)
 public class TrainingsplanAuswahlView extends VerticalLayout{
 
-    private TrainingsplanService trainingsplanService;
+	private TrainingsplanService trainingsplanService;
     private TrainingService trainingService;
     private VerticalLayout vlGrid = new VerticalLayout();
     private Grid<Trainingsplan> gridTrainingsplan = new Grid<>(Trainingsplan.class, false);
     private HorizontalLayout hlToolbar = new HorizontalLayout();
     private TextField tfFilterName = new TextField();
     private Button btnChoose = new Button("Trainingsplan auswählen");
-    private HorizontalLayout hlButtons_Trainingsplan = new HorizontalLayout(btnChoose);
+    private Button btnExportPdf = new Button("PDF Exportieren", VaadinIcon.FILE_TEXT.create());
+    private HorizontalLayout hlButtons_Trainingsplan = new HorizontalLayout(btnChoose, btnExportPdf);
     private Dialog trainingDialog = new Dialog();
     private Grid<Training> gridTraining = new Grid<>(Training.class, false);
     private Button btnStarten = new Button("Training starten");
     private Button btnAbbrechen = new Button("Abbrechen");
     private HorizontalLayout hlButtons_Training = new HorizontalLayout(btnStarten, btnAbbrechen);
 
-
     public TrainingsplanAuswahlView(@Autowired TrainingsplanService trainingsplanService, @Autowired TrainingService trainingService) {
         this.trainingsplanService = trainingsplanService;
         this.trainingService = trainingService;
+
+        // PDF Export-Button konfigurieren
+        btnExportPdf.addClickListener(e -> {
+            Trainingsplan selectedTrainingsplan = getSelectedTrainingsplan();
+            if (selectedTrainingsplan != null) {
+                String exportUrl = "/trainingsplan/" + selectedTrainingsplan.getId() + "/uebungen";
+                getUI().ifPresent(ui -> ui.getPage().open(exportUrl));
+            } else {
+                Notification.show("Bitte wählen Sie einen Trainingsplan aus, um ihn zu exportieren.", 3000, Notification.Position.MIDDLE);
+            }
+        });
+        btnExportPdf.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         btnChoose.addClickListener(e -> {
             Trainingsplan selectedTrainingsplan = getSelectedTrainingsplan();
@@ -108,5 +120,4 @@ public class TrainingsplanAuswahlView extends VerticalLayout{
     public Trainingsplan getSelectedTrainingsplan() {
         return gridTrainingsplan.asSingleSelect().getValue();
     }
-    
 }
