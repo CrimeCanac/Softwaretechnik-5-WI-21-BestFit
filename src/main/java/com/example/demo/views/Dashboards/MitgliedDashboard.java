@@ -1,5 +1,11 @@
 package com.example.demo.views.Dashboards;
 
+// Author: Delbrin Alazo
+
+// Created: 2025-01-15
+// Modified by: Delbrin Alazo
+// Description: Mitglied Dashboard mit Kalorien- und Proteinrechner
+
 import com.example.demo.service.Kalorienrechner;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
