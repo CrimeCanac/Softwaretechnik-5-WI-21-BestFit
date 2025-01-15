@@ -1,0 +1,23 @@
+PROGRAMM Z_EXAM 
+TABLES splfi. 
+DATA: ok_code LIKE sy-ucomm, wa-flight TYPE splfi. 
+
+MODULE status_0200 OUTPUT. 
+Set PF_STATUS'100'. 
+SET TITLEBAR'100'. 
+splfi = wa_flight. 
+ENDMODULE. 
+
+MODULE user_command_0200 INPUT. 
+CASE ok_code. 
+    WHEN'LEAVE'. 
+    LEAVE PROGRAM. 
+    WHEN 'BACK'. 
+    CALL SCREEN 100. 
+    WHEN 'SAVE'. 
+    MODIFY splfi FROM splfi. 
+    WHEN 'DELETE'. 
+    DELTE splfi FROM splfi. 
+    ENDCASE. 
+    CLEAR ok_code. 
+    ENDMODULE. 
