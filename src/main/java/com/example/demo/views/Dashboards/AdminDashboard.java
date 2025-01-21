@@ -3,7 +3,7 @@ package com.example.demo.views.Dashboards;
 
 // Created: 2025-01-15
 // Modified by: Delbrin Alazo
-// Description: Admin Dashboard with buttons for managing exercises, training plans, profiles, employees, members, and logout
+// Description: Admin Dashboard with buttons for managing exercises, training plans, profiles, employees, members, machines, and logout
 
 import jakarta.annotation.security.RolesAllowed;
 import com.vaadin.flow.component.UI;
@@ -35,9 +35,22 @@ public class AdminDashboard extends VerticalLayout {
         }
 
         // Create buttons with I18n texts
-        Button btnUebungen = new Button(bundle.getString("mitglied.dashboard.uebungen"), event -> {
+        Button btnUebungenVerwalten = new Button(bundle.getString("mitglied.dashboard.uebungen"), event -> {
+            UI.getCurrent().navigate("admin/uebungen");
         });
-        Button btnTrainingsplaene = new Button(bundle.getString("mitglied.dashboard.trainingsplaene"), event -> {
+        btnUebungenVerwalten.setText("Übungen Verwalten");
+
+        Button btnGeraeteVerwalten = new Button("Geräte Verwalten", event -> {
+            UI.getCurrent().navigate("admin/geraete");
+        });
+
+        Button btnTrainingsplaeneVerwalten = new Button(bundle.getString("mitglied.dashboard.trainingsplaene"), event -> {
+        });
+        btnTrainingsplaeneVerwalten.setText("Trainingspläne Verwalten");
+
+        Button btnMitgliederVerwalten = new Button("Mitglieder Verwalten", event -> {
+        });
+        Button btnMitarbeiterVerwalten = new Button("Mitarbeiter Verwalten", event -> {
         });
         Button btnProfilBearbeiten = new Button(bundle.getString("mitglied.dashboard.profilBearbeiten"), event -> {
         });
@@ -49,15 +62,9 @@ public class AdminDashboard extends VerticalLayout {
         btnLogout.getStyle().set("background-color", "red");
         btnLogout.getStyle().set("color", "white");
 
-        // Additional buttons for admin
-        Button btnMitarbeiterVerwalten = new Button("Mitarbeiter Verwalten", event -> {
-        });
-        Button btnMitgliederVerwalten = new Button("Mitglieder Verwalten", event -> {
-        });
-
         // Create a horizontal layout for the buttons
-        HorizontalLayout buttonLayout = new HorizontalLayout(btnUebungen, btnTrainingsplaene,
-                btnProfilBearbeiten, btnMitarbeiterVerwalten, btnMitgliederVerwalten, btnLogout);
+        HorizontalLayout buttonLayout = new HorizontalLayout(btnUebungenVerwalten, btnGeraeteVerwalten, btnTrainingsplaeneVerwalten,
+                btnMitgliederVerwalten, btnMitarbeiterVerwalten, btnProfilBearbeiten, btnLogout);
         buttonLayout.setAlignItems(Alignment.CENTER);
         buttonLayout.setSpacing(true);
 
