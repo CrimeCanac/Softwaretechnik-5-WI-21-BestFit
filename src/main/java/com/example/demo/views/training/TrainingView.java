@@ -1,6 +1,4 @@
 
-
-
 package com.example.demo.views.training;
 
 import java.util.*;
@@ -62,9 +60,9 @@ public class TrainingView extends VerticalLayout implements BeforeEnterObserver 
     private Button btnExportPdf = new Button("PDF Exportieren", VaadinIcon.FILE_TEXT.create());
 
     @Autowired
-    public TrainingView(TrainingService trainingService, 
-                        TrainingshistorieService trainingshistorieService,
-                        UserService userService) {
+    public TrainingView(TrainingService trainingService,
+            TrainingshistorieService trainingshistorieService,
+            UserService userService) {
         this.trainingService = trainingService;
         this.trainingshistorieService = trainingshistorieService;
         this.userService = userService;
@@ -76,7 +74,7 @@ public class TrainingView extends VerticalLayout implements BeforeEnterObserver 
         });
         btnExportPdf.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
-        // Event-Handler für andere Buttons
+        // Event-Handler für andere Buttons Modified von Delbrin Alazo
         btnBeenden.addClickListener(e -> {
             Trainingshistorie th = new Trainingshistorie();
             stopuhr.stop();
@@ -88,7 +86,7 @@ public class TrainingView extends VerticalLayout implements BeforeEnterObserver 
             th.setSumUebungen(getSumUebungen());
             th.setUser(userService.getCurrentUser());
             trainingshistorieService.saveTrainingshistorie(th);
-            UI.getCurrent().navigate("home");
+            UI.getCurrent().navigate("mitglied-dashboard");
         });
         btnAbbrechen.addClickListener(e -> {
             stopuhr.stop();
@@ -106,8 +104,8 @@ public class TrainingView extends VerticalLayout implements BeforeEnterObserver 
         vlUebungen.setSpacing(false);
 
         // Elemente zur Ansicht hinzufügen
-        add(title, stopuhr, new Hr(), vlUebungen, new Hr(), 
-            new HorizontalLayout(btnExportPdf, btnBeenden, btnAbbrechen));
+        add(title, stopuhr, new Hr(), vlUebungen, new Hr(),
+                new HorizontalLayout(btnExportPdf, btnBeenden, btnAbbrechen));
     }
 
     @Override
@@ -136,7 +134,7 @@ public class TrainingView extends VerticalLayout implements BeforeEnterObserver 
             vl.setAlignItems(Alignment.CENTER);
             vl.setJustifyContentMode(JustifyContentMode.CENTER);
             uebungComponents.add(vl);
-            btnBeenden.setEnabled(false);        
+            btnBeenden.setEnabled(false);
         }
         for (Uebung uebung : uebungen) {
             uebungComponents.add(new UebungLayout(uebung, 3));
