@@ -4,7 +4,7 @@ package com.example.demo.views.register;
 // Created: 2024-12-07
 // Last Updated: 2024-12-07
 // Modified by: Delbrin Alazo
-// Description: Ergänzende Profilinformationen für die Registrierung
+// Description: register form optional for additional user information
 
 import com.example.demo.model.entities.User;
 import com.example.demo.service.UserService;

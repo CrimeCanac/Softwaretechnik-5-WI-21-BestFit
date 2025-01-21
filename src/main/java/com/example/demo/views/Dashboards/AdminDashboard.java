@@ -1,4 +1,10 @@
 package com.example.demo.views.Dashboards;
+// Author: Delbrin Alazo
+
+// Created: 2025-01-14
+// Last Updated: 2025-01-21
+// Modified by: Delbrin Alazo
+// Description: Admin dashboard view
 
 import jakarta.annotation.security.RolesAllowed;
 import com.vaadin.flow.component.UI;
@@ -38,8 +44,9 @@ public class AdminDashboard extends VerticalLayout {
             UI.getCurrent().navigate("admin/geraete");
         });
 
-        Button btnTrainingsplaeneVerwalten = new Button(bundle.getString("admin.dashboard.trainingsplaeneVerwalten"), event -> {
-        });
+        Button btnTrainingsplaeneVerwalten = new Button(bundle.getString("admin.dashboard.trainingsplaeneVerwalten"),
+                event -> {
+                });
 
         Button btnMitgliederVerwalten = new Button(bundle.getString("admin.dashboard.mitgliederVerwalten"), event -> {
         });
@@ -56,7 +63,8 @@ public class AdminDashboard extends VerticalLayout {
         btnLogout.getStyle().set("color", "white");
 
         // Create a horizontal layout for the buttons
-        HorizontalLayout buttonLayout = new HorizontalLayout(btnUebungenVerwalten, btnGeraeteVerwalten, btnTrainingsplaeneVerwalten,
+        HorizontalLayout buttonLayout = new HorizontalLayout(btnUebungenVerwalten, btnGeraeteVerwalten,
+                btnTrainingsplaeneVerwalten,
                 btnMitgliederVerwalten, btnMitarbeiterVerwalten, btnProfilBearbeiten, btnLogout);
         buttonLayout.setAlignItems(Alignment.CENTER);
         buttonLayout.setSpacing(true);

@@ -23,7 +23,6 @@ import com.example.demo.service.GeraetService;
 
 import com.example.demo.views.AdminLayout;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 
@@ -60,12 +59,13 @@ public class AdminUebungenView extends VerticalLayout {
         uebungGrid.addColumn(Uebung::getId).setHeader("ID").setWidth("100px").setFlexGrow(0);
         uebungGrid.addColumn(Uebung::getName).setHeader("Name");
         uebungGrid.addColumn(Uebung::getBeschreibung).setHeader("Beschreibung");
-        uebungGrid.addColumn(uebung -> uebung.getMuskelgruppe() != null ? uebung.getMuskelgruppe().name() : "Keine Muskelgruppe")
-        .setHeader("Muskelgruppe")
-        .setFlexGrow(1);
+        uebungGrid.addColumn(
+                uebung -> uebung.getMuskelgruppe() != null ? uebung.getMuskelgruppe().name() : "Keine Muskelgruppe")
+                .setHeader("Muskelgruppe")
+                .setFlexGrow(1);
 
         uebungGrid.addColumn(uebung -> uebung.getGeraet() != null ? uebung.getGeraet().getName() : "Kein Gerät")
-                  .setHeader("Gerät / Bereich");
+                .setHeader("Gerät / Bereich");
         uebungGrid.addComponentColumn(this::createActions).setHeader("Aktionen");
 
         // Übungen aus der Datenbank laden
@@ -92,12 +92,11 @@ public class AdminUebungenView extends VerticalLayout {
         TextField beschreibungField = new TextField("Beschreibung");
         beschreibungField.setPlaceholder("Übungsbeschreibung eingeben");
         beschreibungField.addClassName("dialog-input");
-        
+
         ComboBox<Muskelgruppe> muskelgruppeComboBox = new ComboBox<>("Muskelgruppe");
         muskelgruppeComboBox.setItems(Muskelgruppe.values());
         muskelgruppeComboBox.setPlaceholder("Muskelgruppe auswählen");
         muskelgruppeComboBox.addClassName("dialog-input");
-
 
         ComboBox<Geraet> geraetComboBox = new ComboBox<>("Gerät / Bereich (optional)");
         geraetComboBox.setItems(geraetService.alleGeraeteAbrufen());
@@ -113,7 +112,7 @@ public class AdminUebungenView extends VerticalLayout {
                 Uebung neueUebung = new Uebung();
                 neueUebung.setName(nameField.getValue());
                 neueUebung.setBeschreibung(beschreibungField.getValue());
-                neueUebung.setMuskelgruppe(muskelgruppeComboBox.getValue()); 
+                neueUebung.setMuskelgruppe(muskelgruppeComboBox.getValue());
                 neueUebung.setGeraet(geraetComboBox.getValue());
 
                 uebungService.uebungHinzufuegen(neueUebung);
@@ -134,7 +133,8 @@ public class AdminUebungenView extends VerticalLayout {
         buttonLayout.setWidthFull();
         buttonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
 
-        VerticalLayout dialogLayout = new VerticalLayout(nameField, beschreibungField, muskelgruppeComboBox, geraetComboBox, buttonLayout);
+        VerticalLayout dialogLayout = new VerticalLayout(nameField, beschreibungField, muskelgruppeComboBox,
+                geraetComboBox, buttonLayout);
         dialog.add(dialogLayout);
         dialog.open();
     }
@@ -145,7 +145,6 @@ public class AdminUebungenView extends VerticalLayout {
         editButton.getStyle().set("border", "none");
         editButton.addClickListener(event -> openEditUebungDialog(uebung));
         editButton.getElement().setAttribute("title", "Bearbeiten");
-        
 
         Button deleteButton = new Button();
         deleteButton.getElement().setProperty("innerHTML", "<i class='fa fa-trash' style='color: #DC3545;'></i>");
@@ -177,7 +176,7 @@ public class AdminUebungenView extends VerticalLayout {
         TextField beschreibungField = new TextField("Beschreibung");
         beschreibungField.setValue(uebung.getBeschreibung());
         beschreibungField.addClassName("dialog-input");
-        
+
         ComboBox<Muskelgruppe> muskelgruppeComboBox = new ComboBox<>("Muskelgruppe");
         muskelgruppeComboBox.setItems(Muskelgruppe.values());
         muskelgruppeComboBox.setValue(uebung.getMuskelgruppe()); // Vorauswahl der aktuellen Muskelgruppe
@@ -211,7 +210,8 @@ public class AdminUebungenView extends VerticalLayout {
         buttonLayout.setWidthFull();
         buttonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
 
-        VerticalLayout dialogLayout = new VerticalLayout(nameField, beschreibungField, muskelgruppeComboBox, geraetComboBox, buttonLayout);
+        VerticalLayout dialogLayout = new VerticalLayout(nameField, beschreibungField, muskelgruppeComboBox,
+                geraetComboBox, buttonLayout);
         dialog.add(dialogLayout);
         dialog.open();
     }
@@ -252,14 +252,17 @@ public class AdminUebungenView extends VerticalLayout {
 
         Label nameLabel = new Label("Name: " + uebung.getName());
         Label beschreibungLabel = new Label("Beschreibung: " + uebung.getBeschreibung());
-        Label muskelgruppeLabel = new Label("Muskelgruppe: " + (uebung.getMuskelgruppe() != null ? uebung.getMuskelgruppe().name() : "Keine Muskelgruppe"));
-        Label geraetLabel = new Label("Gerät: " + (uebung.getGeraet() != null ? uebung.getGeraet().getName() : "Kein Gerät"));
+        Label muskelgruppeLabel = new Label("Muskelgruppe: "
+                + (uebung.getMuskelgruppe() != null ? uebung.getMuskelgruppe().name() : "Keine Muskelgruppe"));
+        Label geraetLabel = new Label(
+                "Gerät: " + (uebung.getGeraet() != null ? uebung.getGeraet().getName() : "Kein Gerät"));
 
         Button closeButton = new Button("Schließen", event -> dialog.close());
         closeButton.getStyle().set("background-color", "#6C757D");
         closeButton.getStyle().set("color", "white");
 
-        VerticalLayout dialogLayout = new VerticalLayout(nameLabel, beschreibungLabel, muskelgruppeLabel, geraetLabel, closeButton);
+        VerticalLayout dialogLayout = new VerticalLayout(nameLabel, beschreibungLabel, muskelgruppeLabel, geraetLabel,
+                closeButton);
         dialogLayout.setSpacing(true);
         dialog.add(dialogLayout);
         dialog.open();

@@ -1,5 +1,12 @@
 package com.example.demo.views.Dashboards;
 
+// Author: Delbrin Alazo
+
+// Created: 2025-01-14
+// Last Updated: 2025-01-21
+// Modified by: Delbrin Alazo
+// Description: Mitarbeiter dashboard view
+
 import jakarta.annotation.security.RolesAllowed;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -38,11 +45,13 @@ public class MitarbeiterDashboard extends VerticalLayout {
             UI.getCurrent().navigate("admin/geraete");
         });
 
-        Button btnTrainingsplaeneVerwalten = new Button(bundle.getString("mitarbeiter.dashboard.trainingsplaeneVerwalten"), event -> {
-        });
+        Button btnTrainingsplaeneVerwalten = new Button(
+                bundle.getString("mitarbeiter.dashboard.trainingsplaeneVerwalten"), event -> {
+                });
 
-        Button btnMitgliederVerwalten = new Button(bundle.getString("mitarbeiter.dashboard.mitgliederVerwalten"), event -> {
-        });
+        Button btnMitgliederVerwalten = new Button(bundle.getString("mitarbeiter.dashboard.mitgliederVerwalten"),
+                event -> {
+                });
         Button btnProfilBearbeiten = new Button(bundle.getString("mitarbeiter.dashboard.profilBearbeiten"), event -> {
         });
         Button btnLogout = new Button(bundle.getString("mitarbeiter.dashboard.logout"), event -> {
@@ -54,7 +63,8 @@ public class MitarbeiterDashboard extends VerticalLayout {
         btnLogout.getStyle().set("color", "white");
 
         // Create a horizontal layout for the buttons
-        HorizontalLayout buttonLayout = new HorizontalLayout(btnUebungenVerwalten, btnGeraeteVerwalten, btnTrainingsplaeneVerwalten,
+        HorizontalLayout buttonLayout = new HorizontalLayout(btnUebungenVerwalten, btnGeraeteVerwalten,
+                btnTrainingsplaeneVerwalten,
                 btnMitgliederVerwalten, btnProfilBearbeiten, btnLogout);
         buttonLayout.setAlignItems(Alignment.CENTER);
         buttonLayout.setSpacing(true);

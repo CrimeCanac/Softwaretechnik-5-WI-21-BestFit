@@ -4,7 +4,7 @@ package com.example.demo.views.register;
 // Created: 2024-12-07
 // Last Updated: 2024-12-07
 // Modified by: Delbrin Alazo
-// Description: Registrierungsformular für die Registrierung von Benutzern
+// Description: Register form for user registration main registration form
 
 import com.example.demo.model.entities.User;
 import com.example.demo.model.enums.Role;

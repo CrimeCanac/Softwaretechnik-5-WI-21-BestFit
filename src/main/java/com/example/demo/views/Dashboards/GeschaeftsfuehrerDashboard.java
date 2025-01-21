@@ -1,4 +1,10 @@
 package com.example.demo.views.Dashboards;
+// Author: Delbrin Alazo
+
+// Created: 2025-01-14
+// Last Updated: 2025-01-21
+// Modified by: Delbrin Alazo
+// Description: Geschaeftsfuehrer dashboard view
 
 import jakarta.annotation.security.RolesAllowed;
 import com.vaadin.flow.component.UI;

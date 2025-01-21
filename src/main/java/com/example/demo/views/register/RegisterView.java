@@ -4,7 +4,7 @@ package com.example.demo.views.register;
 // Created: 2024-12-07
 // Last Updated: 2024-12-07
 // Modified by: Delbrin Alazo
-// Description: RegisterView für die Registrierung von Benutzern
+// Description: RegisterView for user registration
 
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.demo.model.entities.User;
