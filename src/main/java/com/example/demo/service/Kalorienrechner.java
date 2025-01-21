@@ -1,4 +1,9 @@
 package com.example.demo.service;
+// Author: Delbrin Alazo
+
+// Created: 2025-01-15
+// Modified by: Delbrin Alazo
+// Description: Mitglied Dashboard mit Kalorien- und Proteinrechner
 
 public class Kalorienrechner {
 

@@ -1,12 +1,13 @@
 package com.example.demo.views.Dashboards;
-
 // Author: Delbrin Alazo
 
 // Created: 2025-01-15
 // Modified by: Delbrin Alazo
 // Description: Mitglied Dashboard mit Kalorien- und Proteinrechner
 
+import jakarta.annotation.security.RolesAllowed;
 import com.example.demo.service.Kalorienrechner;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -17,7 +18,10 @@ import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
-import jakarta.annotation.security.RolesAllowed;
+
+import java.util.Locale;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 @PageTitle("Mitglied Dashboard")
 @Route(value = "mitglied-dashboard")
@@ -25,13 +29,27 @@ import jakarta.annotation.security.RolesAllowed;
 public class MitgliedDashboard extends VerticalLayout {
 
     public MitgliedDashboard() {
-        // Create buttons
-        Button btnTrainingsplaene = new Button("Meine Trainingspläne");
-        Button btnTrainingshistorie = new Button("Meine Trainingshistorie");
-        Button btnTrainingStarten = new Button("Training starten");
+        // Load I18n texts
+        ResourceBundle bundle;
+        try {
+            bundle = ResourceBundle.getBundle("messages", UI.getCurrent().getLocale());
+        } catch (MissingResourceException e) {
+            // Fallback to English if no bundle / error occurs
+            bundle = ResourceBundle.getBundle("messages", Locale.ENGLISH);
+        }
 
-        // Create logout button
-        Button btnLogout = new Button("Logout", event -> {
+        // Create buttons with I18n texts
+        Button btnUebungen = new Button(bundle.getString("mitglied.dashboard.uebungen"), event -> {
+        });
+        Button btnTrainingsplaene = new Button(bundle.getString("mitglied.dashboard.trainingsplaene"), event -> {
+        });
+        Button btnTrainingshistorie = new Button(bundle.getString("mitglied.dashboard.trainingshistorie"), event -> {
+        });
+        Button btnTrainingStarten = new Button(bundle.getString("mitglied.dashboard.trainingStarten"), event -> {
+        });
+        Button btnProfilBearbeiten = new Button(bundle.getString("mitglied.dashboard.profilBearbeiten"), event -> {
+        });
+        Button btnLogout = new Button(bundle.getString("mitglied.dashboard.logout"), event -> {
             VaadinSession.getCurrent().getSession().invalidate();
             VaadinSession.getCurrent().close();
             getUI().ifPresent(ui -> ui.navigate("login"));
@@ -40,46 +58,27 @@ public class MitgliedDashboard extends VerticalLayout {
         btnLogout.getStyle().set("color", "white");
 
         // Create a horizontal layout for the buttons
-        HorizontalLayout buttonLayout = new HorizontalLayout(btnTrainingsplaene, btnTrainingshistorie,
-                btnTrainingStarten, btnLogout);
-        buttonLayout.setJustifyContentMode(JustifyContentMode.END);
+        HorizontalLayout buttonLayout = new HorizontalLayout(btnUebungen, btnTrainingsplaene, btnTrainingshistorie,
+                btnTrainingStarten, btnProfilBearbeiten, btnLogout);
         buttonLayout.setAlignItems(Alignment.CENTER);
         buttonLayout.setSpacing(true);
 
-        // Create a horizontal layout for the title and center it
-        HorizontalLayout titleLayout = new HorizontalLayout(new H1("Mitglied Dashboard"));
-        titleLayout.setJustifyContentMode(JustifyContentMode.CENTER);
-        titleLayout.setAlignItems(Alignment.CENTER);
-        titleLayout.setWidthFull();
-
-        // Create a main layout to hold the title and button layouts
-        VerticalLayout mainLayout = new VerticalLayout();
-        mainLayout.setWidthFull();
-        mainLayout.add(titleLayout, buttonLayout);
+        // Add title and button layout to the main layout
+        VerticalLayout mainLayout = new VerticalLayout(new H1(bundle.getString("mitglied.dashboard.title")), buttonLayout);
         mainLayout.setAlignItems(Alignment.CENTER);
-        mainLayout.setSpacing(false);
+        mainLayout.setSpacing(true);
 
-        // Add the main layout to the main view
         add(mainLayout);
-        setSizeFull();
 
-        // Create fields for the calorie and protein calculator
+        // Create fields for the calculator
         NumberField weightField = new NumberField("Gewicht (kg)");
         NumberField heightField = new NumberField("Größe (cm)");
         NumberField ageField = new NumberField("Alter");
-
-        // Create activity level field with descriptions
-        ComboBox<String> activityLevelField = new ComboBox<>("Aktivitätslevel");
-        activityLevelField.setItems(
-                "1: Sehr wenig aktiv (Kein Sport, Bürojob)",
-                "2: Wenig aktiv (Etwas spazieren, Bürojob)",
-                "3: Mäßig aktiv (Sport, Bürojob)",
-                "4: Sehr aktiv (Sport, körperliche Arbeit)",
-                "5: Extrem aktiv (Intensiver Sport, körperliche Arbeit)");
-
+        ComboBox<String> activityLevelField = new ComboBox<>("Aktivitätslevel", "1", "2", "3", "4", "5");
         Button calculateButton = new Button("Berechnen");
         Label resultLabel = new Label();
 
+        // Add click listener to the calculate button
         calculateButton.addClickListener(event -> {
             double weight = weightField.getValue();
             double height = heightField.getValue();
