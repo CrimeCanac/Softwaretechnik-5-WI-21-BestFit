@@ -3,7 +3,7 @@ package com.example.demo.service;
 
 // Created: 2025-01-15
 // Modified by: Delbrin Alazo
-// Description: Mitglied Dashboard mit Kalorien- und Proteinrechner
+// Description: Service for calculating calories
 
 public class Kalorienrechner {
 

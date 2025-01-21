@@ -5,7 +5,7 @@ package com.example.demo.security;
 // Created: 2024-12-07
 // Last Updated: 2024-12-07
 // Modified by: Delbrin Alazo
-// Description:Klasse für die Authentifizierung des Benutzers
+// Description: Class for handling user details
 
 import com.example.demo.model.entities.User;
 import com.example.demo.model.repositories.UserRepository;

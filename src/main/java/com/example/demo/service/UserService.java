@@ -5,7 +5,7 @@ package com.example.demo.service;
 // Created: 2024-12-07
 // Last Updated: 2024-12-07
 // Modified by: Delbrin Alazo
-// Description: Klasse für die Benutzerdaten
+// Description: Class for User Service 
 
 import java.util.List;
 import java.util.Optional;
@@ -79,12 +79,12 @@ public class UserService {
     }
 
     public boolean verifyMasterPassword(String masterPassword) {
-    User masterUser = repository.findByUsername("Master");
-    if (masterUser != null) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        return encoder.matches(masterPassword, masterUser.getPasswort());
+        User masterUser = repository.findByUsername("Master");
+        if (masterUser != null) {
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            return encoder.matches(masterPassword, masterUser.getPasswort());
+        }
+        return false;
     }
-    return false;
-}
 
 }

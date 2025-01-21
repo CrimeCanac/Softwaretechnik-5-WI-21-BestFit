@@ -5,7 +5,7 @@ package com.example.demo.model.repositories;
 // Created: 2024-12-07
 // Last Updated: 2024-12-07
 // Modified by: Delbrin Alazo
-// Description: Repository für die Benutzerdaten
+// Description: Repository for User 
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

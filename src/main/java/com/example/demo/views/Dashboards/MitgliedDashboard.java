@@ -3,7 +3,7 @@ package com.example.demo.views.Dashboards;
 
 // Created: 2025-01-15
 // Modified by: Delbrin Alazo
-// Description: Mitglied Dashboard mit Kalorien- und Proteinrechner
+// Description: Mitglied Dashboard for displaying the main view for a member
 
 import jakarta.annotation.security.RolesAllowed;
 import com.example.demo.service.Kalorienrechner;

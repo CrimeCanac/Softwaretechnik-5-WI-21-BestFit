@@ -5,7 +5,7 @@ package com.example.demo.model.entities;
 // Created: 2024-12-07
 // Last Updated: 2024-12-07
 // Modified by: Delbrin Alazo
-// Description:Entität für die Benutzerdaten
+// Description: Entity for User
 
 import jakarta.persistence.*;
 import java.io.Serializable;
@@ -53,7 +53,7 @@ public class User implements Serializable {
     @Column
     private Double gewichtKg;
 
-    // Getter und Setter
+    // Getter and Setter
 
     public String getRolle() {
         return rolle;

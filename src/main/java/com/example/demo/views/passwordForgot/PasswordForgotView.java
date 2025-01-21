@@ -4,7 +4,7 @@ package com.example.demo.views.passwordForgot;
 // Created: 2024-12-07
 // Last Updated: 2024-12-07
 // Modified by: Delbrin Alazo
-// Description: Passwort zurücksetzen
+// Description: PasswordForgotView class for handling password reset
 
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -37,13 +37,13 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 @Route("passwordreset")
 public class PasswordForgotView extends VerticalLayout {
 
-    // Layouts für verschiedene Schritte
+    // Layouts for the form
     FormLayout layoutPasswortForgetPage = new FormLayout();
     HorizontalLayout layoutButtonsNext = new HorizontalLayout();
     HorizontalLayout layoutButtonsUeberpruefen = new HorizontalLayout();
     HorizontalLayout layoutButtonsZuruecksetzen = new HorizontalLayout();
 
-    // UI-Komponenten
+    // UI-Components
     H1 header = new H1("Passwort zurücksetzen");
     Paragraph pSchrittEins = new Paragraph("Schritt 1: Geben Sie ihren Benutzernamen ein");
     Paragraph pSchrittZwei = new Paragraph("Schritt 2: Geben Sie die Antwort ihrer Sicherheitsfrage ein");
@@ -67,7 +67,7 @@ public class PasswordForgotView extends VerticalLayout {
 
     private final UserService userService;
 
-    // Konstruktor: Initialisiert die View und setzt die Komponenten
+    // Constructor: PasswordForgotView
     public PasswordForgotView(@Autowired UserService userService) {
         this.userService = userService;
 
@@ -87,7 +87,7 @@ public class PasswordForgotView extends VerticalLayout {
         layoutButtonsUeberpruefen.setVisible(false);
         layoutButtonsZuruecksetzen.setVisible(false);
 
-        // Funktion Button Next (Ueberpruefung der Existenz des Nutzername)
+        // Check if the user exists
         buttonNext1.addClickListener(e -> {
             User user = userService.findByUsername(tfBenutzername.getValue());
             if (user != null) {
@@ -98,8 +98,7 @@ public class PasswordForgotView extends VerticalLayout {
             }
         });
 
-        // Funktion Button Ueberpruefen (Ueberpruefung der Korrektheit der Antwort auf
-        // Sicherheitsfrage)
+        // Check if the answer to the security question is correct
         buttonUeberpruefen.addClickListener(e -> {
             User user = userService.findByUsername(tfBenutzername.getValue());
             if (user != null && BCrypt.checkpw(tfAntwort.getValue(), user.getSicherheitsfrageAntwort())) {
@@ -109,7 +108,7 @@ public class PasswordForgotView extends VerticalLayout {
             }
         });
 
-        // Funktion Button Zuruecksetzen (Zuruecksetzen des Passworts)
+        // Function for reseting the password
         buttonZurueckSetzen.addClickListener(e -> {
             if (tfZuruecksetzen.getValue().equals(tfZuruecksetzenBest.getValue())) {
                 if (passwortStaerke.equals("Schwach")) {
@@ -123,7 +122,7 @@ public class PasswordForgotView extends VerticalLayout {
         });
     }
 
-    // Styling der Komponenten
+    // Styling of components
     private void stylingComponentsCss() {
         setSizeFull();
         setAlignItems(Alignment.CENTER);
@@ -170,7 +169,7 @@ public class PasswordForgotView extends VerticalLayout {
         add(layoutPasswortForgetPage);
     }
 
-    // Setzt die Komponenten für den Start
+    // Set components for the start
     private void setComponentsForStart() {
         pSchrittEins.setVisible(true);
         pSchrittZwei.setVisible(false);
@@ -184,7 +183,7 @@ public class PasswordForgotView extends VerticalLayout {
         layoutButtonsNext.setVisible(true);
     }
 
-    // Setzt die Komponenten für den nächsten Schritt
+    // Set components for the next step
     private void setComponentsForNextStep() {
         pSchrittEins.setVisible(false);
         pSchrittZwei.setVisible(true);
@@ -200,7 +199,7 @@ public class PasswordForgotView extends VerticalLayout {
         layoutButtonsNext.setVisible(false);
     }
 
-    // Setzt die Komponenten für das Zurücksetzen des Passworts
+    // Set components for the password reset
     private void setComponentsForReset() {
         pSchrittEins.setVisible(false);
         pSchrittZwei.setVisible(false);
@@ -215,7 +214,7 @@ public class PasswordForgotView extends VerticalLayout {
         layoutButtonsZuruecksetzen.setVisible(true);
     }
 
-    // Funktion für alle Abbrechen Button
+    // function for the cancel button
     private void buttonAbbrechenFunktion() {
         Dialog confirmationDialog = new Dialog();
         confirmationDialog.setModal(true);
@@ -233,13 +232,13 @@ public class PasswordForgotView extends VerticalLayout {
         Button btnAbbrechenBestaetigung = new Button("Nein", event -> confirmationDialog.close());
         btnAbbrechenBestaetigung.addThemeVariants(ButtonVariant.LUMO_ERROR);
 
-        // Erstellen eines HorizontalLayouts für die Buttons und zentrieren
+        // create a horizontal layout for the buttons and center
         HorizontalLayout buttonLayout = new HorizontalLayout(btnAbbrechenBestaetigung, buttonBestaetigenBestaetigung);
         buttonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
         buttonLayout.setWidthFull();
         buttonLayout.setSpacing(true);
 
-        // Erstellen eines VerticalLayouts für den Dialoginhalt
+        // create a vertical layout for the dialog content
         VerticalLayout dialogLayout = new VerticalLayout(spanAbbrechen, buttonLayout);
         dialogLayout.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
         dialogLayout.setSpacing(true);
@@ -250,7 +249,7 @@ public class PasswordForgotView extends VerticalLayout {
         confirmationDialog.open();
     }
 
-    // Überprüfung, ob die beiden Passwortfelder übereinstimmen
+    // check if both provided passwords match
     private void checkPasswords() {
         tfZuruecksetzenBest.setValueChangeMode(ValueChangeMode.LAZY);
 
@@ -264,7 +263,7 @@ public class PasswordForgotView extends VerticalLayout {
         });
     }
 
-    // Funktion für den Passwort Checker
+    // function for checking the password strength
     private void setupPasswordStrengthChecker() {
         Icon checkIcon = VaadinIcon.CHECK.create();
         checkIcon.setVisible(false);
@@ -298,7 +297,7 @@ public class PasswordForgotView extends VerticalLayout {
         });
     }
 
-    // Funktion für die Berechnung der Passwortstärke
+    // function for calculating the password strength
     private String evaluatePasswordStrength(String password) {
         if (password.length() < 6) {
             return "Schwach";
@@ -339,7 +338,7 @@ public class PasswordForgotView extends VerticalLayout {
         }
     }
 
-    // Bestätigung, ob Nutzer mit einem schwachen Passwort fortfahren möchte
+    // confirm that the user wants to use a weak password
     private void buttonSpeichernMitSchwachenPasswortFunktion(String passwort) {
         Dialog confirmationDialog = new Dialog();
         confirmationDialog.setModal(true);
@@ -357,14 +356,14 @@ public class PasswordForgotView extends VerticalLayout {
         Button btnAbbrechenBestaetigung = new Button("Nein", event -> confirmationDialog.close());
         btnAbbrechenBestaetigung.addThemeVariants(ButtonVariant.LUMO_ERROR);
 
-        // Erstellen eines HorizontalLayouts für die Buttons und zentrieren
+        // create a horizontal layout for the buttons and center
         HorizontalLayout buttonLayout = new HorizontalLayout(btnAbbrechenBestaetigung,
                 buttonBestaetigenBestaetigung);
         buttonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
         buttonLayout.setWidthFull();
         buttonLayout.setSpacing(true);
 
-        // Erstellen eines VerticalLayouts für den Dialoginhalt
+        // create a vertical layout for the dialog content
         VerticalLayout dialogLayout = new VerticalLayout(spanAbbrechen, buttonLayout);
         dialogLayout.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
         dialogLayout.setSpacing(true);
@@ -375,7 +374,7 @@ public class PasswordForgotView extends VerticalLayout {
         confirmationDialog.open();
     }
 
-    // Zurücksetzen des Passworts
+    // reset the password
     private void resetPassword(String passwort) {
         User user = userService.findByUsername(tfBenutzername.getValue());
         if (user != null) {

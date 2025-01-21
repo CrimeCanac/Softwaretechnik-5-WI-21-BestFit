@@ -5,7 +5,7 @@ package com.example.demo.model.enums;
 // Created: 2024-12-07
 // Last Updated: 2024-12-07
 // Modified by: Delbrin Alazo
-// Description: Enum für Sicherheitsfragen
+// Description: Enum for Security Question in the application
 
 public enum Sicherheitsfrage {
 

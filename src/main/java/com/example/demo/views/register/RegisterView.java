@@ -55,17 +55,17 @@ public class RegisterView extends VerticalLayout {
         add(tabs, content);
     }
 
-    // Methode, um den User aus dem RegisterForm zu holen
+    // method to get the user from the register form
     public User getUserFormRegisterForm() {
         return registerForm.getUser();
     }
 
-    // Methode, um die Sichtbarkeit des RegisterFormOpt zu setzen
+    // method to get the user from the register form opt
     public void setRegisterVisible(boolean visible) {
         registerFormOpt.setVisible(visible);
     }
 
-    // Methode, um zur nächsten Registerkarte zu wechseln
+    // method to switch to the next tab
     public void switchToNextTab() {
         tabs.setSelectedTab(tab2);
     }

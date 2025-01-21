@@ -3,7 +3,7 @@ package com.example.demo.security;
 // Author: Delbrin Alazo
 // Created: 2025-15.01
 // Modified by: Delbrin Alazo
-// Description: Klasse für die erfolgreiche Authentifizierung und dann Weiterleitung ins Dashboard
+// Description: Class for handling the authentication success and redirecting the user to the appropriate dashboard
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,7 +29,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             if (authority.getAuthority().equals("ROLE_MITGLIED")) {
                 redirectUrl = "/mitglied-dashboard";
                 break;
-            } else if (authority.getAuthority().equals("ROLE_ADMIN")) {
+            } else if (authority.getAuthority().equals("ROLE_ADMINISTRATOR")) {
                 redirectUrl = "/admin-dashboard";
                 break;
             } else if (authority.getAuthority().equals("ROLE_MANAGER")) {

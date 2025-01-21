@@ -34,20 +34,20 @@ import java.util.ResourceBundle;
 
 @AnonymousAllowed
 @PageTitle("Login || BestFit") // Tab Name
-@Route(value = "login") // Setzen der URL
+@Route(value = "login") // Set URL
 public class LoginView extends LoginOverlay implements BeforeEnterObserver {
 
     private final AuthenticatedUser authenticatedUser;
 
     private final HorizontalLayout buttonLayout = new HorizontalLayout();
-    private final Paragraph pRegistrierung = new Paragraph("Noch keinen Account? Registrieren Sie sich hier.");
-    private final Button btnRegistrierung = new Button("Registrieren");
-    private final Button btnPassworrtVergessen = new Button("Passwort vergessen");
+    private final Paragraph pRegistrierung = new Paragraph("No account yet? Register here.");
+    private final Button btnRegistrierung = new Button("Register");
+    private final Button btnPassworrtVergessen = new Button("Forgot password");
 
     public LoginView(AuthenticatedUser authenticatedUser) {
         this.addClassName("login-view");
 
-        // Zentriert den Registrierungstext
+        // Center the registration text
         pRegistrierung.addClassName(LumoUtility.TextAlignment.CENTER);
         pRegistrierung.getStyle().set("text-align", "center");
         pRegistrierung.getStyle().set("margin", "10px 0");
@@ -55,23 +55,23 @@ public class LoginView extends LoginOverlay implements BeforeEnterObserver {
         this.authenticatedUser = authenticatedUser;
         setAction(RouteUtil.getRoutePath(VaadinService.getCurrent().getContext(), getClass()));
 
-        createLoginForm(); // Erstellt das Login-Formular
-        stylingComponentsCss(); // Styling der Buttons
+        createLoginForm(); // Create the login form
+        stylingComponentsCss(); // Style the buttons
 
-        setForgotPasswordButtonVisible(false); // Deaktiviert Standard-Button für Passwort vergessen
+        setForgotPasswordButtonVisible(false); // Disable default forgot password button
         setOpened(true);
 
-        // Navigiert zu Passwort-Reset oder Registrierung bei Klick
+        // Navigate to password reset or registration on click
         btnPassworrtVergessen.addClickListener(e -> UI.getCurrent().navigate("passwordreset"));
         btnRegistrierung.addClickListener(e -> UI.getCurrent().navigate("register"));
     }
 
-    // Leitet eingeloggte Benutzer zur Startseite weiter oder zeigt Login-Fehler an
+    // Redirect logged-in users to the home page or show login error
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
         if (authenticatedUser.get().isPresent()) {
             setOpened(false);
-            event.forwardTo(SuccessView.class); // Routing sollte Login erfolgreich sein
+            event.forwardTo(SuccessView.class); // Routing if login was successfull
         }
 
         if (event.getLocation().getQueryParameters().getParameters().containsKey("error")) {
@@ -79,7 +79,7 @@ public class LoginView extends LoginOverlay implements BeforeEnterObserver {
         }
     }
 
-    // Erstellt das Login-Formular und bindet die I18n-Texte ein
+    // Create the login form and bind the I18n texts
     private void createLoginForm() {
         LoginI18n i18n = createLoginI18n();
         setI18n(i18n);
@@ -90,29 +90,30 @@ public class LoginView extends LoginOverlay implements BeforeEnterObserver {
 
         pRegistrierung.addClassName(LumoUtility.TextAlignment.CENTER);
 
-        // Zentriert den Button in einem Layout
+        // Center the button in a layout
         buttonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
         buttonLayout.setWidthFull();
         buttonLayout.add(btnRegistrierung);
 
-        // Fügt die zusätzlichen Komponenten in den Footer ein
+        // Add components to footer
         getFooter().add(btnPassworrtVergessen, new Hr(), pRegistrierung, buttonLayout);
     }
 
     private LoginI18n createLoginI18n() {
         LoginI18n i18n = LoginI18n.createDefault();
 
-        // Lädt die korrekte Sprachdatei (en,de) basierend auf der Sprache die im
-        // Betriebssystem eingestellt ist
+        // Load according language (en,de) based on language set in the operating
+        // system.
+        // Words are stored in the {i18n} messages.properties files
         ResourceBundle bundle;
         try {
             bundle = ResourceBundle.getBundle("messages", UI.getCurrent().getLocale());
         } catch (MissingResourceException e) {
-            // Fallback auf Englisch, falls kein Bundle / Fehler auftritt
+            // Fallback to English if no bundle / error occurs
             bundle = ResourceBundle.getBundle("messages", Locale.ENGLISH);
         }
 
-        // Setzt die Texte für das Formular
+        // Set Text for the login form
         LoginI18n.Form loginForm = new LoginI18n.Form();
         loginForm.setTitle(bundle.getString("login.title"));
         loginForm.setUsername(bundle.getString("login.username"));
@@ -120,13 +121,13 @@ public class LoginView extends LoginOverlay implements BeforeEnterObserver {
         loginForm.setSubmit(bundle.getString("login.submit"));
         i18n.setForm(loginForm);
 
-        // Setzt die Kopfzeile
+        // Set Header for the login form
         LoginI18n.Header header = new LoginI18n.Header();
         header.setTitle(bundle.getString("login.header.title"));
         header.setDescription(bundle.getString("login.header.description"));
         i18n.setHeader(header);
 
-        // Konfiguriert die Fehlermeldung
+        // Configure error message
         LoginI18n.ErrorMessage errorMessage = new LoginI18n.ErrorMessage();
         errorMessage.setTitle(bundle.getString("login.error.title"));
         errorMessage.setMessage(bundle.getString("login.error.message"));
@@ -135,22 +136,22 @@ public class LoginView extends LoginOverlay implements BeforeEnterObserver {
         return i18n;
     }
 
-    // Fügt Styling für Buttons und Layouts hinzu
+    // Add styling to the buttons
     private void stylingComponentsCss() {
         btnRegistrierung.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
-        // Styling für "Passwort vergessen"-Button
+        // Styling for the "Forgot password" button
         btnPassworrtVergessen.getStyle().set("display", "block");
         btnPassworrtVergessen.getStyle().set("text-align", "center");
         btnPassworrtVergessen.getStyle().set("width", "100%");
         btnPassworrtVergessen.getStyle().set("font-size", "14px");
         btnPassworrtVergessen.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
 
-        // Styling für den Registrierungsbutton
+        // Styling for the "Register" button
         btnRegistrierung.getStyle().set("width", "60%");
     }
 
-    // Zeigt eine Fehlermeldung bei fehlerhaftem Login an
+    // Show error message if login fails
     private void setErrorForLoginFailure() {
         setI18n(createLoginI18n());
         setError(true);

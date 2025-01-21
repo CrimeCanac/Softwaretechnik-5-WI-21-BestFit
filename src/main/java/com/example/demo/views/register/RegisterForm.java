@@ -72,15 +72,7 @@ public class RegisterForm extends VerticalLayout {
         setupPasswordStrengthChecker();
         checkPasswords();
 
-        // Wenn eine Sicherheitsfrage ausgewählt wird, wird das Textfeld für die Antwort
-        // sichtbar
-        tfAntwort.setVisible(true);
-        cbSicherheitsfrage.addValueChangeListener(event -> {
-            tfAntwort.setVisible(true);
-        });
-
-        // Wenn eine Rolle ausgewählt wird, wird das Masterpasswortfeld sichtbar, wenn
-        // die Rolle nicht "mitglied" ist
+        // if role is not mitglied, show master password field
         pfMasterPassword.setVisible(false);
         cbRole.setItems(Role.values());
         cbRole.addValueChangeListener(event -> {
@@ -102,14 +94,14 @@ public class RegisterForm extends VerticalLayout {
         });
     }
 
-    // Styling der Komponenten
+    // Styling of components
     private void stylingComponentsCss() {
 
         setWidthFull();
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
 
-        // Layout für die Registrierungsparameter
+        // Layout for the registration form
         layoutRegisterPage.setResponsiveSteps(
                 new FormLayout.ResponsiveStep("0", 1),
                 new FormLayout.ResponsiveStep("500px", 2));
@@ -127,7 +119,7 @@ public class RegisterForm extends VerticalLayout {
         layoutButtons.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
         layoutButtons.getStyle().set("padding-top", "5%");
 
-        // Styling der Eingabeparameter mit Eingrenzungen der Größe
+        // Styling of the components
         header.setWidth("47vh");
         header.getStyle().set("padding-top", "3%");
         header.getStyle().set("text-align", "center");
@@ -200,8 +192,7 @@ public class RegisterForm extends VerticalLayout {
         add(layoutRegisterPage);
     }
 
-    // Funktion für den Abbrechen-Button, mit Dialog Fenster ob man wirklich
-    // abbrechen möchte
+    // function for the cancel button
     private void btnAbbrechenFunktion() {
         Dialog confirmationDialog = new Dialog();
         confirmationDialog.setModal(true);
@@ -219,13 +210,13 @@ public class RegisterForm extends VerticalLayout {
         Button btnAbbrechenBestaetigung = new Button("Nein", event -> confirmationDialog.close());
         btnAbbrechenBestaetigung.addThemeVariants(ButtonVariant.LUMO_ERROR);
 
-        // Erstellen eines HorizontalLayouts für die Buttons und zentrieren
+        // create a horizontal layout for the buttons and center
         HorizontalLayout buttonLayout = new HorizontalLayout(btnAbbrechenBestaetigung, buttonBestaetigenBestaetigung);
         buttonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
         buttonLayout.setWidthFull();
         buttonLayout.setSpacing(true);
 
-        // Erstellen eines VerticalLayouts für den Dialoginhalt
+        // create a vertical layout for the dialog content
         VerticalLayout dialogLayout = new VerticalLayout(spanAbbrechen, buttonLayout);
         dialogLayout.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
         dialogLayout.setSpacing(true);
@@ -236,78 +227,61 @@ public class RegisterForm extends VerticalLayout {
         confirmationDialog.open();
     }
 
-    // Funktion für die Registrierung
+    // Function for the continue button
     private void btnWeiterFunktion() {
         String passwort = tfPasswort.getValue();
 
-        // Überprüfen, ob alle Felder ausgefüllt sind
+        // check if all fields are filled
         if (tfBenutzername.getValue().isEmpty() || tfPasswort.getValue().isEmpty()
                 || tfPasswortBestaetigen.getValue().isEmpty()
                 || cbSicherheitsfrage.getValue() == null || tfAntwort.getValue().isEmpty()
                 || cbRole.getValue() == null) {
             Notification.show("Bitte füllen Sie alle Felder aus.");
         }
-        // Überprüfen, ob Leerzeichen im Benutzernamen oder Passwort enthalten sind
+        // check if the username contains spaces
         else if (tfBenutzername.getValue().contains(" ") || tfPasswort.getValue().contains(" ")) {
             Notification.show("Leerzeichen sind nicht erlaubt.");
         }
-        // Überprüfen, ob der Benutzername nicht erlaubte Wörter enthält
+        // check if the username contains "user", "admin", "test" or "root"
         else if (tfBenutzername.getValue().toLowerCase().contains("user")
+                || tfBenutzername.getValue().toLowerCase().contains("master")
                 || tfBenutzername.getValue().toLowerCase().contains("test")
                 || tfBenutzername.getValue().toLowerCase().contains("root")
                 || tfBenutzername.getValue().toLowerCase().contains("admin")) {
-            Notification.show("Der Benutzername darf nicht 'user', 'admin', 'test' oder 'root' enthalten.");
+            Notification.show("Der Benutzername darf nicht 'user', 'master', 'admin', 'test' oder 'root' enthalten.");
         }
-        // Überprüfen, ob die Passwörter übereinstimmen
-        else if (!tfPasswort.getValue().equals(tfPasswortBestaetigen.getValue())) {
-            Notification.show("Die Passwörter stimmen nicht überein.");
-        }
-        // Überprüfen, ob die Rolle nicht "mitglied" ist und das Master-Passwort
-        // eingegeben wurde
+        // Check if the password is at least 8 characters long
         else if (!cbRole.getValue().equals(Role.mitglied)) {
-            if (pfMasterPassword.isEmpty()) {
-                Notification.show("Bitte geben Sie das Master-Passwort ein.");
-            } else if (!userService.verifyMasterPassword(pfMasterPassword.getValue())) {
-                Notification.show("Das Master-Passwort ist falsch.");
-            } else {
-                // Überprüfen, ob das Passwort mindestens 8 Zeichen lang ist
-                if (passwort.length() < 8 && !passwort.isEmpty() || passwort.length() > 30) {
-                    tfPasswort.setErrorMessage("Passwort muss mindestens 8 und maximal 30 Zeichen lang sein");
-                    tfPasswort.setInvalid(true);
-                } else {
-                    tfPasswort.setInvalid(false);
-                    // Überprüfen, ob das Passwort stark genug ist, wenn nicht wird gefragt, ob mit
-                    // einem schwachen Passwort fortgefahren werden soll
-                    if (passwortStaerke.equals("Schwach")) {
-                        passwort = tfPasswort.getValue();
-                        buttonSpeichernMitSchwachenPasswortFunktion(passwort);
-                    } else {
-                        createUser(passwort);
-                        registerView.switchToNextTab();
-                    }
-                }
-            }
+        if (pfMasterPassword.isEmpty()) {
+            Notification.show("Bitte geben Sie das Master-Passwort ein.");
+    }   else if (!userService.verifyMasterPassword(pfMasterPassword.getValue())) {
+            Notification.show("Das Master-Passwort ist falsch.");
+    }   else {
+            validateAndCreateUser(passwort);
+    }
+}       else {
+            validateAndCreateUser(passwort);
+}}
+
+    private void validateAndCreateUser(String passwort) {
+        if (passwort.length() < 8 && !passwort.isEmpty() || passwort.length() > 30) {
+            tfPasswort.setErrorMessage("Passwort muss mindestens 8 und maximal 30 Zeichen lang sein");
+            tfPasswort.setInvalid(true);
         } else {
-            // Überprüfen, ob das Passwort mindestens 8 Zeichen lang ist
-            if (passwort.length() < 8 && !passwort.isEmpty() || passwort.length() > 30) {
-                tfPasswort.setErrorMessage("Passwort muss mindestens 8 und maximal 30 Zeichen lang sein");
-                tfPasswort.setInvalid(true);
+            tfPasswort.setInvalid(false);
+            // Check if the password is strong enough, if not ask if you want to continue
+            // with a weak password
+            if (passwortStaerke.equals("Schwach")) {
+                passwort = tfPasswort.getValue();
+                buttonSpeichernMitSchwachenPasswortFunktion(passwort);
             } else {
-                tfPasswort.setInvalid(false);
-                // Überprüfen, ob das Passwort stark genug ist, wenn nicht wird gefragt, ob mit
-                // einem schwachen Passwort fortgefahren werden soll
-                if (passwortStaerke.equals("Schwach")) {
-                    passwort = tfPasswort.getValue();
-                    buttonSpeichernMitSchwachenPasswortFunktion(passwort);
-                } else {
-                    createUser(passwort);
-                    registerView.switchToNextTab();
-                }
+                createUser(passwort);
+                registerView.switchToNextTab();
             }
         }
     }
 
-    // Funktion für den Passwort Checker
+    // Function for the password strength checker
     private void setupPasswordStrengthChecker() {
         Icon checkIcon = VaadinIcon.CHECK.create();
         checkIcon.setVisible(false);
@@ -341,7 +315,7 @@ public class RegisterForm extends VerticalLayout {
         });
     }
 
-    // Funktion für die Berechnung der Passwortstärke
+    // Function for the password strength calculation
     private String evaluatePasswordStrength(String password) {
         if (password.length() < 6) {
             return "Schwach";
@@ -382,7 +356,7 @@ public class RegisterForm extends VerticalLayout {
         }
     }
 
-    // Überprüfung, ob die beiden Passwortfelder übereinstimmen
+    // check if the passwords match
     private void checkPasswords() {
         tfPasswortBestaetigen.setValueChangeMode(ValueChangeMode.LAZY);
 
@@ -396,7 +370,7 @@ public class RegisterForm extends VerticalLayout {
         });
     }
 
-    // Bestätigung, ob Nutzer mit einem schwachen Passwort erstellt werden soll
+    // confirm if you want to continue with a weak password
     private void buttonSpeichernMitSchwachenPasswortFunktion(String passwort) {
 
         Dialog confirmationDialog = new Dialog();
@@ -416,14 +390,14 @@ public class RegisterForm extends VerticalLayout {
         Button btnAbbrechenBestaetigung = new Button("Nein", event -> confirmationDialog.close());
         btnAbbrechenBestaetigung.addThemeVariants(ButtonVariant.LUMO_ERROR);
 
-        // Erstellen eines HorizontalLayouts für die Buttons und zentrieren
+        // create a horizontal layout for the buttons and center
         HorizontalLayout buttonLayout = new HorizontalLayout(btnAbbrechenBestaetigung,
                 buttonBestaetigenBestaetigung);
         buttonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
         buttonLayout.setWidthFull();
         buttonLayout.setSpacing(true);
 
-        // Erstellen eines VerticalLayouts für den Dialoginhalt
+        // create a vertical layout for the dialog content
         VerticalLayout dialogLayout = new VerticalLayout(spanAbbrechen, buttonLayout);
         dialogLayout.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
         dialogLayout.setSpacing(true);
@@ -434,7 +408,7 @@ public class RegisterForm extends VerticalLayout {
         confirmationDialog.open();
     }
 
-    // Erstellung eines Users
+    // create the user
     private void createUser(String passwort) {
         passwort = tfPasswort.getValue();
         String hashedPasswort = BCrypt.hashpw(passwort, BCrypt.gensalt());

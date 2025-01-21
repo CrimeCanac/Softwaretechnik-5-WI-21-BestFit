@@ -52,7 +52,7 @@ public class RegisterFormOpt extends VerticalLayout {
         });
     }
 
-    // Styling der Komponenten
+    // Styling of components
     private void stylingComponentsCss() {
 
         setWidthFull();
@@ -96,7 +96,7 @@ public class RegisterFormOpt extends VerticalLayout {
         add(layoutRegisterPage);
     }
 
-    // Funktion für die erlaubten Werte der Felder
+    // Function for the fields
     private void functionForFields() {
         tfGroesse.setValueChangeMode(ValueChangeMode.LAZY);
         tfGewicht.setValueChangeMode(ValueChangeMode.LAZY);
@@ -135,7 +135,7 @@ public class RegisterFormOpt extends VerticalLayout {
         }
     }
 
-    // Funktion für die Speicherung der Daten in der Datenbank
+    // Function for the save button
     private void buttonSpeichernFunktion(RegisterView registerView, UserService userService) {
         try {
             if (tfGroesse.isEmpty() || tfGewicht.isEmpty()) {
@@ -148,10 +148,10 @@ public class RegisterFormOpt extends VerticalLayout {
 
             Notification.show("Profilinformationen wurden gespeichert.");
 
-            // User aus dem RegisterView holen
+            // get the user from the form
             User user = registerView.getUserFormRegisterForm();
 
-            // Daten aus den Feldern in den User setzen
+            // set the additional information
             user.setGroesseCm(tfGroesse.getValue());
             user.setGewichtKg(tfGewicht.getValue());
 

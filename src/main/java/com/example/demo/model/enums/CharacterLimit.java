@@ -4,7 +4,7 @@ package com.example.demo.model.enums;
 // Created: 2024-12-07
 // Last Updated: 2024-12-07
 // Modified by: Delbrin Alazo
-// Description: Enum für die Längenbegrenzung von Benutzereingaben
+// Description: Enum for Character Limit
 
 public enum CharacterLimit {
     NAME(4, 50),

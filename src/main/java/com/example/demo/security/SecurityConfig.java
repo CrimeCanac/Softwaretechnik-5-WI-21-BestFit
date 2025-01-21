@@ -4,7 +4,7 @@ package com.example.demo.security;
 // Created: 2024-12-07
 // Last Updated: 2024-12-07
 // Modified by: Delbrin Alazo
-// Description: Konfiguration der Sicherheitseinstellungen
+// Description: Configuration for Spring Security
 
 import com.example.demo.views.login.LoginView;
 import com.vaadin.flow.spring.security.VaadinWebSecurity;
@@ -34,27 +34,27 @@ public class SecurityConfig extends VaadinWebSecurity {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // Zugriff auf CSS Dateien erlauben
+        // Allow CSS Files
         http.authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(new AntPathRequestMatcher("/**/*.css")).permitAll());
+                .requestMatchers(new AntPathRequestMatcher("/**/*.css")).permitAll());
 
-        // Zugriff auf Bilder erlauben
+        // Allow pictures
         http.authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(new AntPathRequestMatcher("/images/*.png")).permitAll());
+                .requestMatchers(new AntPathRequestMatcher("/images/*.png")).permitAll());
 
-        // Zugriff auf SVC Icons erlauben
+        // Allow SVC Icons
         http.authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(new AntPathRequestMatcher("/line-awesome/**/*.svg")).permitAll());
+                .requestMatchers(new AntPathRequestMatcher("/line-awesome/**/*.svg")).permitAll());
 
-        // Vaadin-Integration und Login-View setzen
+        // Vaadin-Integration and Login-View
         setLoginView(http, LoginView.class);
 
         http.formLogin(form -> form
-                        .loginPage("/login")
-                        .successHandler(customAuthenticationSuccessHandler)
-                        .permitAll());
+                .loginPage("/login")
+                .successHandler(customAuthenticationSuccessHandler)
+                .permitAll());
 
-        // Überschreibe die Standardkonfiguration
+        // overwrite default config, to avoid errors.
         super.configure(http);
     }
 
