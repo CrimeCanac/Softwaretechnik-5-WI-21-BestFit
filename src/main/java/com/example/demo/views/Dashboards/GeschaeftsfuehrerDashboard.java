@@ -1,9 +1,4 @@
 package com.example.demo.views.Dashboards;
-// Author: Delbrin Alazo
-
-// Created: 2025-01-15
-// Modified by: Delbrin Alazo
-// Description: Geschaeftsfuehrer Dashboard with buttons for managing exercises, training plans, profiles, employees, members, machines, and logout
 
 import jakarta.annotation.security.RolesAllowed;
 import com.vaadin.flow.component.UI;
@@ -35,26 +30,24 @@ public class GeschaeftsfuehrerDashboard extends VerticalLayout {
         }
 
         // Create buttons with I18n texts
-        Button btnUebungenVerwalten = new Button(bundle.getString("mitglied.dashboard.uebungen"), event -> {
-            UI.getCurrent().navigate("admin/uebungen");
-        });
-        btnUebungenVerwalten.setText("Übungen Verwalten");
-
-        Button btnGeraeteVerwalten = new Button("Geräte Verwalten", event -> {
-            UI.getCurrent().navigate("admin/geraete");
+        Button btnUebungenVerwalten = new Button(bundle.getString("geschaeftsfuehrer.dashboard.uebungenVerwalten"), event -> {
+            UI.getCurrent().navigate("manager/uebungen");
         });
 
-        Button btnTrainingsplaeneVerwalten = new Button(bundle.getString("mitglied.dashboard.trainingsplaene"), event -> {
+        Button btnGeraeteVerwalten = new Button(bundle.getString("geschaeftsfuehrer.dashboard.geraeteVerwalten"), event -> {
+            UI.getCurrent().navigate("manager/geraete");
         });
-        btnTrainingsplaeneVerwalten.setText("Trainingspläne Verwalten");
 
-        Button btnMitgliederVerwalten = new Button("Mitglieder Verwalten", event -> {
+        Button btnTrainingsplaeneVerwalten = new Button(bundle.getString("geschaeftsfuehrer.dashboard.trainingsplaeneVerwalten"), event -> {
         });
-        Button btnMitarbeiterVerwalten = new Button("Mitarbeiter Verwalten", event -> {
+
+        Button btnMitgliederVerwalten = new Button(bundle.getString("geschaeftsfuehrer.dashboard.mitgliederVerwalten"), event -> {
         });
-        Button btnProfilBearbeiten = new Button(bundle.getString("mitglied.dashboard.profilBearbeiten"), event -> {
+        Button btnMitarbeiterVerwalten = new Button(bundle.getString("geschaeftsfuehrer.dashboard.mitarbeiterVerwalten"), event -> {
         });
-        Button btnLogout = new Button(bundle.getString("mitglied.dashboard.logout"), event -> {
+        Button btnProfilBearbeiten = new Button(bundle.getString("geschaeftsfuehrer.dashboard.profilBearbeiten"), event -> {
+        });
+        Button btnLogout = new Button(bundle.getString("geschaeftsfuehrer.dashboard.logout"), event -> {
             VaadinSession.getCurrent().getSession().invalidate();
             VaadinSession.getCurrent().close();
             getUI().ifPresent(ui -> ui.navigate("login"));
@@ -69,7 +62,7 @@ public class GeschaeftsfuehrerDashboard extends VerticalLayout {
         buttonLayout.setSpacing(true);
 
         // Add title and button layout to the main layout
-        H1 title = new H1("Geschaeftsfuehrer Dashboard");
+        H1 title = new H1(bundle.getString("geschaeftsfuehrer.dashboard.title"));
         title.getStyle().set("user-select", "none");
         title.getStyle().set("pointer-events", "none");
 

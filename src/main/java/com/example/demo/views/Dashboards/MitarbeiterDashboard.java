@@ -1,9 +1,4 @@
 package com.example.demo.views.Dashboards;
-// Author: Delbrin Alazo
-
-// Created: 2025-01-15
-// Modified by: Delbrin Alazo
-// Description: Mitarbeiter Dashboard with buttons for managing exercises, training plans, profiles, members, machines, and logout
 
 import jakarta.annotation.security.RolesAllowed;
 import com.vaadin.flow.component.UI;
@@ -35,24 +30,22 @@ public class MitarbeiterDashboard extends VerticalLayout {
         }
 
         // Create buttons with I18n texts
-        Button btnUebungenVerwalten = new Button(bundle.getString("mitglied.dashboard.uebungen"), event -> {
+        Button btnUebungenVerwalten = new Button(bundle.getString("mitarbeiter.dashboard.uebungenVerwalten"), event -> {
             UI.getCurrent().navigate("admin/uebungen");
         });
-        btnUebungenVerwalten.setText("Übungen Verwalten");
 
-        Button btnGeraeteVerwalten = new Button("Geräte Verwalten", event -> {
+        Button btnGeraeteVerwalten = new Button(bundle.getString("mitarbeiter.dashboard.geraeteVerwalten"), event -> {
             UI.getCurrent().navigate("admin/geraete");
         });
 
-        Button btnTrainingsplaeneVerwalten = new Button(bundle.getString("mitglied.dashboard.trainingsplaene"), event -> {
+        Button btnTrainingsplaeneVerwalten = new Button(bundle.getString("mitarbeiter.dashboard.trainingsplaeneVerwalten"), event -> {
         });
-        btnTrainingsplaeneVerwalten.setText("Trainingspläne Verwalten");
 
-        Button btnMitgliederVerwalten = new Button("Mitglieder Verwalten", event -> {
+        Button btnMitgliederVerwalten = new Button(bundle.getString("mitarbeiter.dashboard.mitgliederVerwalten"), event -> {
         });
-        Button btnProfilBearbeiten = new Button(bundle.getString("mitglied.dashboard.profilBearbeiten"), event -> {
+        Button btnProfilBearbeiten = new Button(bundle.getString("mitarbeiter.dashboard.profilBearbeiten"), event -> {
         });
-        Button btnLogout = new Button(bundle.getString("mitglied.dashboard.logout"), event -> {
+        Button btnLogout = new Button(bundle.getString("mitarbeiter.dashboard.logout"), event -> {
             VaadinSession.getCurrent().getSession().invalidate();
             VaadinSession.getCurrent().close();
             getUI().ifPresent(ui -> ui.navigate("login"));
@@ -67,7 +60,7 @@ public class MitarbeiterDashboard extends VerticalLayout {
         buttonLayout.setSpacing(true);
 
         // Add title and button layout to the main layout
-        H1 title = new H1("Mitarbeiter Dashboard");
+        H1 title = new H1(bundle.getString("mitarbeiter.dashboard.title"));
         title.getStyle().set("user-select", "none");
         title.getStyle().set("pointer-events", "none");
 
