@@ -13,6 +13,7 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.router.PageTitle;
@@ -64,7 +65,11 @@ public class MitgliedDashboard extends VerticalLayout {
         buttonLayout.setSpacing(true);
 
         // Add title and button layout to the main layout
-        VerticalLayout mainLayout = new VerticalLayout(new H1(bundle.getString("mitglied.dashboard.title")), buttonLayout);
+        H1 title = new H1(bundle.getString("mitglied.dashboard.title"));
+        title.getStyle().set("user-select", "none");
+        title.getStyle().set("pointer-events", "none");
+
+        VerticalLayout mainLayout = new VerticalLayout(title, buttonLayout);
         mainLayout.setAlignItems(Alignment.CENTER);
         mainLayout.setSpacing(true);
 
@@ -74,26 +79,44 @@ public class MitgliedDashboard extends VerticalLayout {
         NumberField weightField = new NumberField("Gewicht (kg)");
         NumberField heightField = new NumberField("Größe (cm)");
         NumberField ageField = new NumberField("Alter");
-        ComboBox<String> activityLevelField = new ComboBox<>("Aktivitätslevel", "1", "2", "3", "4", "5");
+        ComboBox<String> activityLevelField = new ComboBox<>("Aktivitätslevel");
+        activityLevelField.setItems(
+                "1 - kaum oder keine körperliche Aktivität (z.B. Büroarbeit)",
+                "2 - leichte körperliche Aktivität (z.B. leichte Hausarbeit)",
+                "3 - mäßige körperliche Aktivität (z.B. leichte körperliche Arbeit)",
+                "4 - schwere körperliche Aktivität (z.B. Bauarbeiter)",
+                "5 - sehr schwere körperliche Aktivität (z.B. Leistungssportler)"
+        );
         Button calculateButton = new Button("Berechnen");
         Label resultLabel = new Label();
 
         // Add click listener to the calculate button
         calculateButton.addClickListener(event -> {
-            double weight = weightField.getValue();
-            double height = heightField.getValue();
-            double age = ageField.getValue();
-            int activityLevel = activityLevelField.getValue().charAt(0) - '0'; // Extract the numeric value
+            if (weightField.isEmpty() || heightField.isEmpty() || ageField.isEmpty() || activityLevelField.isEmpty()) {
+                resultLabel.setText("Bitte füllen Sie alle Felder aus.");
+                resultLabel.getStyle().set("color", "red");
+            } else {
+                double weight = weightField.getValue();
+                double height = heightField.getValue();
+                double age = ageField.getValue();
+                int activityLevel = Integer.parseInt(activityLevelField.getValue().substring(0, 1)); // Extract the numeric value
 
-            double grundumsatz = Kalorienrechner.berechneGrundumsatz(weight, height, age);
-            double calorieNeeds = Kalorienrechner.berechneKalorienbedarf(grundumsatz, activityLevel);
-            double proteinNeeds = Kalorienrechner.berechneProteinbedarf(weight);
+                double grundumsatz = Kalorienrechner.berechneGrundumsatz(weight, height, age);
+                double calorieNeeds = Kalorienrechner.berechneKalorienbedarf(grundumsatz, activityLevel);
+                double proteinNeeds = Kalorienrechner.berechneProteinbedarf(weight);
 
-            resultLabel.setText("Kalorienbedarf: " + calorieNeeds + " kcal, Proteinbedarf: " + proteinNeeds + " g");
+                resultLabel.setText("Kalorienbedarf: " + calorieNeeds + " kcal, Proteinbedarf: " + proteinNeeds + " g");
+                resultLabel.getStyle().set("color", "black");
+            }
         });
 
-        // Add the calculator fields and button to the layout
-        VerticalLayout calculatorLayout = new VerticalLayout(weightField, heightField, ageField, activityLevelField,
+        // Add the calculator fields and button to the layout and make it not selectable
+        H2 calculatorTitle = new H2("Kalorien- und Proteinrechner");
+        calculatorTitle.getStyle().set("user-select", "none");
+        calculatorTitle.getStyle().set("pointer-events", "none");
+
+        VerticalLayout calculatorLayout = new VerticalLayout(calculatorTitle, weightField, heightField, ageField,
+                activityLevelField,
                 calculateButton, resultLabel);
         calculatorLayout.setAlignItems(Alignment.CENTER);
         calculatorLayout.setSpacing(true);
