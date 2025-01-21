@@ -25,4 +25,8 @@ public class PasswordHasher {
  * Master
  * yV@)A~=*3aT3dF|~>KY2
  * Answer
+ * 
+ * Owner
+ * Hallo1234!
+ * Hallo1234!
  */

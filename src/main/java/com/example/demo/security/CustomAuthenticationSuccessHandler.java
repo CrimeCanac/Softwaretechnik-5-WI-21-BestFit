@@ -32,8 +32,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             } else if (authority.getAuthority().equals("ROLE_ADMINISTRATOR")) {
                 redirectUrl = "/admin-dashboard";
                 break;
-            } else if (authority.getAuthority().equals("ROLE_MANAGER")) {
-                redirectUrl = "/manager-dashboard";
+            } else if (authority.getAuthority().equals("ROLE_GESCHAEFTSFUEHRER")) {
+                redirectUrl = "/geschaeftsfuehrer-dashboard";
                 break;
             } else if (authority.getAuthority().equals("ROLE_EMPLOYEE")) {
                 redirectUrl = "/employee-dashboard";
