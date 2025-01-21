@@ -18,15 +18,19 @@ public class PasswordHasher {
 }
 
 /*
- * Username: MaxMustermann
- * Password: Hallo1234!
- * SecurityQuestionAnswer: Musterstadt
- * 
  * Master
  * yV@)A~=*3aT3dF|~>KY2
- * Answer
+ * Answer: Not existent
  * 
  * Owner
  * Hallo1234!
  * Hallo1234!
+ * 
+ * Mitarbeiter
+ * Hallo1234!
+ * Hallo1234!
+ * 
+ * Username: MaxMustermann
+ * Password: Hallo1234!
+ * SecurityQuestionAnswer: Musterstadt
  */
