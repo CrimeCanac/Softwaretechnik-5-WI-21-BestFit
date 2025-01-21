@@ -83,10 +83,9 @@ public class MitgliedDashboard extends VerticalLayout {
         activityLevelField.setItems(
                 "1 - kaum oder keine körperliche Aktivität (z.B. Büroarbeit)",
                 "2 - leichte körperliche Aktivität (z.B. leichte Hausarbeit)",
-                "3 - mäßige körperliche Aktivität (z.B. leichte körperliche Arbeit)",
+                "3 - mäßige körperliche Aktivität (z.B. gelegentlicher Sport)",
                 "4 - schwere körperliche Aktivität (z.B. Bauarbeiter)",
-                "5 - sehr schwere körperliche Aktivität (z.B. Leistungssportler)"
-        );
+                "5 - sehr schwere körperliche Aktivität (z.B. Leistungssportler)");
         Button calculateButton = new Button("Berechnen");
         Label resultLabel = new Label();
 
@@ -99,14 +98,28 @@ public class MitgliedDashboard extends VerticalLayout {
                 double weight = weightField.getValue();
                 double height = heightField.getValue();
                 double age = ageField.getValue();
-                int activityLevel = Integer.parseInt(activityLevelField.getValue().substring(0, 1)); // Extract the numeric value
+                int activityLevel = Integer.parseInt(activityLevelField.getValue().substring(0, 1)); // Extract the
+                                                                                                     // numeric value
 
-                double grundumsatz = Kalorienrechner.berechneGrundumsatz(weight, height, age);
-                double calorieNeeds = Kalorienrechner.berechneKalorienbedarf(grundumsatz, activityLevel);
-                double proteinNeeds = Kalorienrechner.berechneProteinbedarf(weight);
+                // Validate input values
+                if (weight <= 0 || weight > 300) {
+                    resultLabel.setText("Bitte geben Sie ein realistisches Gewicht ein (0-300 kg).");
+                    resultLabel.getStyle().set("color", "red");
+                } else if (height <= 0 || height > 250) {
+                    resultLabel.setText("Bitte geben Sie eine realistische Größe ein (0-250 cm).");
+                    resultLabel.getStyle().set("color", "red");
+                } else if (age <= 0 || age > 120) {
+                    resultLabel.setText("Bitte geben Sie ein realistisches Alter ein (0-120 Jahre).");
+                    resultLabel.getStyle().set("color", "red");
+                } else {
+                    double grundumsatz = Kalorienrechner.berechneGrundumsatz(weight, height, age);
+                    double calorieNeeds = Kalorienrechner.berechneKalorienbedarf(grundumsatz, activityLevel);
+                    double proteinNeeds = Kalorienrechner.berechneProteinbedarf(weight);
 
-                resultLabel.setText("Kalorienbedarf: " + calorieNeeds + " kcal, Proteinbedarf: " + proteinNeeds + " g");
-                resultLabel.getStyle().set("color", "black");
+                    resultLabel.setText(
+                            "Kalorienbedarf: " + calorieNeeds + " kcal, Proteinbedarf: " + proteinNeeds + " g");
+                    resultLabel.getStyle().set("color", "black");
+                }
             }
         });
 
