@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+//Author: Fabian Müller
+
 import com.example.demo.model.entities.Geraet;
 import com.example.demo.model.entities.Trainingsplan;
 import com.example.demo.model.entities.Uebung;
@@ -82,7 +84,7 @@ public class PDFExportController {
         response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "attachment; filename=geraeteliste.pdf");
 
-        // PDF generieren
+        // PDF erzeugen
         try (OutputStream os = response.getOutputStream()) {
             PdfRendererBuilder builder = new PdfRendererBuilder();
             builder.useFastMode();

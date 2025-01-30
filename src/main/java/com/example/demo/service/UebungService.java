@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+//Author: Fabian Müller
+
 import com.example.demo.model.entities.Uebung;
 import com.example.demo.model.enums.Muskelgruppe;
 import com.example.demo.model.repositories.UebungRepository;

@@ -1,5 +1,7 @@
 package com.example.demo.model.repositories;
 
+//Author: Fabian Müller
+
 import java.util.*;
 
 import org.springframework.data.jpa.repository.JpaRepository;

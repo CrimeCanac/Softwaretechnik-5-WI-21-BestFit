@@ -1,5 +1,8 @@
 package com.example.demo.views.Geraete;
 
+
+//Author: Fabian Müller
+
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -47,7 +50,7 @@ public class AdminMachinesView extends VerticalLayout {
      // PDF-Export-Button
         Button exportPdfButton = new Button("PDF Export");
         exportPdfButton.getElement().setProperty("innerHTML", "<i class='fa fa-file-pdf-o' style='color: #007BFF; margin-right: 8px;'></i>PDF Export");
-        exportPdfButton.getStyle().set("background-color", "#007BFF"); // Blaue Hintergrundfarbe
+        exportPdfButton.getStyle().set("background-color", "#007BFF");
         exportPdfButton.getStyle().set("color", "white");
         exportPdfButton.getStyle().set("border", "none");
         exportPdfButton.getStyle().set("padding", "10px 15px");
@@ -132,9 +135,9 @@ public class AdminMachinesView extends VerticalLayout {
 
         // HorizontalLayout für die Buttons
         HorizontalLayout buttonLayout = new HorizontalLayout(saveButton, cancelButton);
-        buttonLayout.setSpacing(true); // Abstand zwischen den Buttons
-        buttonLayout.setWidthFull(); // Optional: Button-Layout auf volle Breite setzen
-        buttonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER); // Buttons rechtsbündig ausrichten (optional)
+        buttonLayout.setSpacing(true); 
+        buttonLayout.setWidthFull(); 
+        buttonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
 
         VerticalLayout dialogLayout = new VerticalLayout(nameField, beschreibungField, isPremiumCheckbox, buttonLayout);
         dialog.add(dialogLayout);
@@ -245,10 +248,9 @@ public class AdminMachinesView extends VerticalLayout {
         
         // HorizontalLayout für die Buttons
         HorizontalLayout buttonLayout = new HorizontalLayout(saveButton, cancelButton);
-        buttonLayout.setSpacing(true); // Abstand zwischen den Buttons
-        buttonLayout.setWidthFull(); // Optional: Button-Layout auf volle Breite setzen
-        buttonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER); // Buttons rechtsbündig ausrichten (optional)
-
+        buttonLayout.setSpacing(true);
+        buttonLayout.setWidthFull(); 
+        buttonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER); 
         
         VerticalLayout dialogLayout = new VerticalLayout(nameField, beschreibungField, isPremiumCheckbox, buttonLayout);
         dialog.add(dialogLayout);
@@ -268,22 +270,22 @@ public class AdminMachinesView extends VerticalLayout {
         // Bestätigungs-Button
         Button confirmButton = new Button("Löschen", event -> {
         	try {
-            geraetService.geraetLoeschen(geraet.getId()); // Gerät löschen
-            updateGrid(); // Grid aktualisieren 
+            geraetService.geraetLoeschen(geraet.getId()); 
+            updateGrid(); 
             
         	} catch (RuntimeException ex) {
                 Notification.show(ex.getMessage(), 3500, Notification.Position.MIDDLE);
             }
         	
-        	dialog.close(); // Dialog schließen
+        	dialog.close(); 
         });
-        confirmButton.getStyle().set("background-color", "#FF0000"); // Roter Hintergrund
+        confirmButton.getStyle().set("background-color", "#FF0000"); 
         confirmButton.getStyle().set("color", "white");
 
         // Abbrechen-Button
         Button cancelButton = new Button("Abbrechen", event -> dialog.close());
-        cancelButton.getStyle().set("color", "#007BFF"); // Blau für Abbrechen
-
+        cancelButton.getStyle().set("color", "#007BFF"); 
+        
         // Layout für Buttons
         HorizontalLayout buttonLayout = new HorizontalLayout(confirmButton, cancelButton);
         buttonLayout.setSpacing(true);
@@ -293,6 +295,6 @@ public class AdminMachinesView extends VerticalLayout {
         dialogLayout.setSpacing(true);
         dialog.add(dialogLayout);
 
-        dialog.open(); // Dialog öffnen
+        dialog.open(); 
     }
 }

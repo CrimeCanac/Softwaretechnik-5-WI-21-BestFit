@@ -1,5 +1,8 @@
 package com.example.demo.views.uebung;
 
+//Author: Fabian Müller
+
+
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -180,7 +183,7 @@ public class ManagerUebungenView extends VerticalLayout {
         
         ComboBox<Muskelgruppe> muskelgruppeComboBox = new ComboBox<>("Muskelgruppe");
         muskelgruppeComboBox.setItems(Muskelgruppe.values());
-        muskelgruppeComboBox.setValue(uebung.getMuskelgruppe()); // Vorauswahl der aktuellen Muskelgruppe
+        muskelgruppeComboBox.setValue(uebung.getMuskelgruppe()); 
         muskelgruppeComboBox.addClassName("dialog-input");
 
         ComboBox<Geraet> geraetComboBox = new ComboBox<>("Gerät / Bereich (optional)");

@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+//Author: Fabian Müller
+
 import com.example.demo.model.entities.Geraet;
 import com.example.demo.model.entities.Uebung;
 import com.example.demo.model.repositories.GeraetRepository;
@@ -34,6 +36,12 @@ public class GeraetService {
     public List<Geraet> allePremiumGeraeteAbrufen() {
         return geraetRepository.findByIsPremium(true);
     }
+    
+//  // Basis-Geräte abrufen
+    public List<Geraet> alleBasisGeraeteAbrufen() {
+        return geraetRepository.findByIsPremium(false);
+    }
+        
     
     // Gerät nach ID abrufen
     public Optional<Geraet> geraetNachIdAbrufen(Long id) {

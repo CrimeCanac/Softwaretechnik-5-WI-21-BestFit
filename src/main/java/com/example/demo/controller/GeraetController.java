@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+//Author: Fabian Müller
+
 import com.example.demo.model.entities.Geraet;
 import com.example.demo.model.entities.Uebung;
 import com.example.demo.service.GeraetService;
@@ -85,7 +87,6 @@ public class GeraetController {
     }
     
    
-    
-    
+
     
 }

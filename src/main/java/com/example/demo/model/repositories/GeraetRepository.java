@@ -1,5 +1,7 @@
 package com.example.demo.model.repositories;
 
+//Author: Fabian Müller
+
 import com.example.demo.model.entities.Geraet;
 
 import java.util.List;

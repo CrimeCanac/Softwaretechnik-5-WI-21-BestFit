@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+//Author: Fabian Müller
+
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;

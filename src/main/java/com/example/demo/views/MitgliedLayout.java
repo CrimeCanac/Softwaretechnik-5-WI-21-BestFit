@@ -15,11 +15,11 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.html.Anchor;
 
-public class EmployeeLayout extends AppLayout {
+public class MitgliedLayout extends AppLayout {
 
     private boolean isDrawerOpen = false;
 
-    public EmployeeLayout() {
+    public MitgliedLayout() {
         // CSS- und JS-Dateien einbinden
         UI.getCurrent().getPage().addStyleSheet("/css/bootstrap.min.css");
         UI.getCurrent().getPage().addStyleSheet("/css/style.css");
@@ -46,7 +46,7 @@ public class EmployeeLayout extends AppLayout {
         logo.addClassName("header-logo");
 
         Div adminViewLabel = new Div();
-        adminViewLabel.setText("Mitarbeiter-Ansicht");
+        adminViewLabel.setText("Mitglieder-Ansicht");
         adminViewLabel.addClassName("admin-view-label"); // Optional: CSS-Klasse für Styling
         
         Button logoutButton = new Button("Logout");
@@ -70,9 +70,7 @@ public class EmployeeLayout extends AppLayout {
 
         VerticalLayout menu = new VerticalLayout();
         menu.add(createDrawerMenuItem("Profile", "/mitarbeiter/profile"));
-        menu.add(createDrawerMenuItem("Mitglieder", "/mitarbeiter/members"));
-        menu.add(createDrawerMenuItem("Übungen", "/mitarbeiter/uebungen"));
-        menu.add(createDrawerMenuItem("Geräte", "/mitarbeiter/geraete"));
+        menu.add(createDrawerMenuItem("Übungen", "/mitglied/uebungen"));
         menu.addClassName("drawer-menu");
 
         drawer.add(menu);

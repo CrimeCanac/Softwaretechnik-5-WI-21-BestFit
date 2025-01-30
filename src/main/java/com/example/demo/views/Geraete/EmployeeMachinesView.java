@@ -1,5 +1,8 @@
 package com.example.demo.views.Geraete;
 
+
+//Author: Fabian Müller
+
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -47,7 +50,7 @@ public class EmployeeMachinesView extends VerticalLayout {
      // PDF-Export-Button
         Button exportPdfButton = new Button("PDF Export");
         exportPdfButton.getElement().setProperty("innerHTML", "<i class='fa fa-file-pdf-o' style='color: #007BFF; margin-right: 8px;'></i>PDF Export");
-        exportPdfButton.getStyle().set("background-color", "#007BFF"); // Blaue Hintergrundfarbe
+        exportPdfButton.getStyle().set("background-color", "#007BFF");
         exportPdfButton.getStyle().set("color", "white");
         exportPdfButton.getStyle().set("border", "none");
         exportPdfButton.getStyle().set("padding", "10px 15px");
@@ -93,7 +96,7 @@ public class EmployeeMachinesView extends VerticalLayout {
         dialog.setHeaderTitle("Gerät / Bereich hinzufügen");
         dialog.setWidth("400px");
         dialog.setHeight("auto");
-        dialog.setResizable(true); // Dialog ist skalierbar
+        dialog.setResizable(true);
 
         // Name
         TextField nameField = new TextField("Name");
@@ -132,9 +135,9 @@ public class EmployeeMachinesView extends VerticalLayout {
 
         // HorizontalLayout für die Buttons
         HorizontalLayout buttonLayout = new HorizontalLayout(saveButton, cancelButton);
-        buttonLayout.setSpacing(true); // Abstand zwischen den Buttons
-        buttonLayout.setWidthFull(); // Optional: Button-Layout auf volle Breite setzen
-        buttonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER); // Buttons rechtsbündig ausrichten (optional)
+        buttonLayout.setSpacing(true); 
+        buttonLayout.setWidthFull(); 
+        buttonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER); 
 
         VerticalLayout dialogLayout = new VerticalLayout(nameField, beschreibungField, isPremiumCheckbox, buttonLayout);
         dialog.add(dialogLayout);
@@ -240,14 +243,14 @@ public class EmployeeMachinesView extends VerticalLayout {
         
      // Abbrechen-Button
         Button cancelButton = new Button("Abbrechen", event -> dialog.close());
-        cancelButton.getStyle().set("color", "#007BFF"); // Blau für Abbrechen
+        cancelButton.getStyle().set("color", "#007BFF");
 
         
         // HorizontalLayout für die Buttons
         HorizontalLayout buttonLayout = new HorizontalLayout(saveButton, cancelButton);
-        buttonLayout.setSpacing(true); // Abstand zwischen den Buttons
-        buttonLayout.setWidthFull(); // Optional: Button-Layout auf volle Breite setzen
-        buttonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER); // Buttons rechtsbündig ausrichten (optional)
+        buttonLayout.setSpacing(true); 
+        buttonLayout.setWidthFull(); 
+        buttonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER); 
 
         
         VerticalLayout dialogLayout = new VerticalLayout(nameField, beschreibungField, isPremiumCheckbox, buttonLayout);
@@ -268,8 +271,8 @@ public class EmployeeMachinesView extends VerticalLayout {
         // Bestätigungs-Button
         Button confirmButton = new Button("Löschen", event -> {
         	try {
-            geraetService.geraetLoeschen(geraet.getId()); // Gerät löschen
-            updateGrid(); // Grid aktualisieren 
+            geraetService.geraetLoeschen(geraet.getId()); 
+            updateGrid(); 
             
         	} catch (RuntimeException ex) {
                 Notification.show(ex.getMessage(), 3500, Notification.Position.MIDDLE);
@@ -277,12 +280,12 @@ public class EmployeeMachinesView extends VerticalLayout {
         	
         	dialog.close(); // Dialog schließen
         });
-        confirmButton.getStyle().set("background-color", "#FF0000"); // Roter Hintergrund
+        confirmButton.getStyle().set("background-color", "#FF0000"); 
         confirmButton.getStyle().set("color", "white");
 
         // Abbrechen-Button
         Button cancelButton = new Button("Abbrechen", event -> dialog.close());
-        cancelButton.getStyle().set("color", "#007BFF"); // Blau für Abbrechen
+        cancelButton.getStyle().set("color", "#007BFF"); 
 
         // Layout für Buttons
         HorizontalLayout buttonLayout = new HorizontalLayout(confirmButton, cancelButton);
@@ -293,6 +296,6 @@ public class EmployeeMachinesView extends VerticalLayout {
         dialogLayout.setSpacing(true);
         dialog.add(dialogLayout);
 
-        dialog.open(); // Dialog öffnen
+        dialog.open(); 
     }
 }

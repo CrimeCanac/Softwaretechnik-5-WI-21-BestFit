@@ -1,5 +1,7 @@
 package com.example.demo.model.repositories;
 
+//Author: Fabian Müller
+
 import com.example.demo.model.enums.Muskelgruppe;
 import com.example.demo.model.entities.Uebung;
 import org.springframework.data.jpa.repository.JpaRepository;
