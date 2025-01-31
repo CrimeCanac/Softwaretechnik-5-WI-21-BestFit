@@ -2,11 +2,12 @@ package com.example.demo.views.register;
 
 // Author: Delbrin Alazo
 // Created: 2024-12-07
-// Last Updated: 2024-12-07
+// Last Updated: 2025-01-31
 // Modified by: Delbrin Alazo
 // Description: register form optional for additional user information
 
 import com.example.demo.model.entities.User;
+import com.example.demo.security.AuthenticatedUser;
 import com.example.demo.service.UserService;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -34,7 +35,7 @@ public class RegisterFormOpt extends VerticalLayout {
 
     ProgressBar pRegistration = new ProgressBar();
 
-    public RegisterFormOpt(RegisterView registerView, UserService userService) {
+    public RegisterFormOpt(RegisterView registerView, UserService userService, AuthenticatedUser authenticatedUser) {
 
         layoutRegisterPage.addClassName("register-form-opt");
 
@@ -48,7 +49,7 @@ public class RegisterFormOpt extends VerticalLayout {
         });
 
         btSpeichern.addClickListener(e -> {
-            buttonSpeichernFunktion(registerView, userService);
+            buttonSpeichernFunktion(registerView, userService, authenticatedUser);
         });
     }
 
@@ -60,8 +61,7 @@ public class RegisterFormOpt extends VerticalLayout {
         setJustifyContentMode(JustifyContentMode.CENTER);
 
         layoutRegisterPage.setResponsiveSteps(
-                new FormLayout.ResponsiveStep("0", 1)
-        );
+                new FormLayout.ResponsiveStep("0", 1));
 
         layoutRegisterPage.getStyle().set("box-shadow", "0 0 10px grey");
         layoutRegisterPage.getStyle().set("border-radius", "6px");
@@ -136,7 +136,8 @@ public class RegisterFormOpt extends VerticalLayout {
     }
 
     // Function for the save button
-    private void buttonSpeichernFunktion(RegisterView registerView, UserService userService) {
+    private void buttonSpeichernFunktion(RegisterView registerView, UserService userService,
+            AuthenticatedUser authenticatedUser) {
         try {
             if (tfGroesse.isEmpty() || tfGewicht.isEmpty()) {
                 Notification.show("Bitte füllen Sie alle Felder aus oder überspringen Sie.");
@@ -157,9 +158,29 @@ public class RegisterFormOpt extends VerticalLayout {
 
             userService.update(user);
 
-            UI.getCurrent().navigate("login");
-            Notification.show("Sie können sich jetzt einloggen.");
+            // Get the currently authenticated user
+            User currentUser = authenticatedUser.get().orElse(null);
+            if (currentUser != null) {
+                String role = currentUser.getRolle();
+                String redirectUrl = "";
 
+                if ("administrator".equalsIgnoreCase(role)) {
+                    redirectUrl = "admin-dashboard";
+                } else if ("geschaeftsfuehrer".equalsIgnoreCase(role)) {
+                    redirectUrl = "geschaeftsfuehrer-dashboard";
+                } else if ("mitarbeiter".equalsIgnoreCase(role)) {
+                    redirectUrl = "mitarbeiter-dashboard";
+                } else if ("mitglied".equalsIgnoreCase(role)) {
+                    redirectUrl = "mitglied-dashboard";
+                } else {
+                    redirectUrl = "login";
+                }
+
+                UI.getCurrent().navigate(redirectUrl);
+            } else {
+                UI.getCurrent().navigate("login");
+                Notification.show("Sie können sich jetzt einloggen.");
+            }
         } catch (Exception ex) {
             Notification.show("Bitte füllen Sie alle Felder aus oder überspringen Sie.");
         }

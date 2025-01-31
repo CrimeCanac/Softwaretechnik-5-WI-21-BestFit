@@ -3,12 +3,14 @@ package com.example.demo.service;
 // Author: Delbrin Alazo
 
 // Created: 2024-12-07
-// Last Updated: 2024-12-07
+// Last Updated: 2025-01-31
 // Modified by: Delbrin Alazo
 // Description: Class for User Service 
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -87,4 +89,33 @@ public class UserService {
         return false;
     }
 
+    public boolean verifyAdminOrGeschaeftsfuehrerPassword(String password) {
+        List<User> adminsAndGeschaeftsfuehrer = repository.findAll().stream()
+                .filter(user -> user.getRolle().equals("admin") || user.getRolle().equals("geschaeftsfuehrer"))
+                .collect(Collectors.toList());
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        for (User user : adminsAndGeschaeftsfuehrer) {
+            if (encoder.matches(password, user.getPasswort())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<User> findAllGeschaeftsfuehrer() {
+        return repository.findAllGeschaeftsfuehrer();
+    }
+
+    public List<User> findAllMitarbeiter() {
+        return repository.findAllMitarbeiter();
+    }
+
+    public List<User> findAllMitglieder() {
+        return repository.findAllMitglieder();
+    }
+
+    public void deleteUserById(Long id) {
+        repository.deleteById(id);
+    }
 }

@@ -40,6 +40,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                 break;
             }
         }
+        
 
         if (redirectUrl.isEmpty()) {
             throw new IllegalStateException();

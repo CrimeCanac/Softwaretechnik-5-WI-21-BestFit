@@ -2,11 +2,12 @@ package com.example.demo.views.register;
 
 // Author: Delbrin Alazo
 // Created: 2024-12-07
-// Last Updated: 2024-12-07
+// Last Updated: 2025-01-31
 // Modified by: Delbrin Alazo
 // Description: Register form for user registration main registration form
 
 import com.example.demo.model.entities.User;
+import com.example.demo.security.AuthenticatedUser;
 import com.example.demo.model.enums.Role;
 import com.example.demo.model.enums.Sicherheitsfrage;
 import com.example.demo.service.UserService;
@@ -31,6 +32,8 @@ import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import java.util.Optional;
+
 
 public class RegisterForm extends VerticalLayout {
 
@@ -59,14 +62,16 @@ public class RegisterForm extends VerticalLayout {
 
     private final UserService userService;
     private final RegisterView registerView;
+    private final AuthenticatedUser authenticatedUser;
 
     private User user;
 
-    public RegisterForm(RegisterView registerView, UserService userService) {
+    public RegisterForm(RegisterView registerView, UserService userService, AuthenticatedUser authenticatedUser) {
 
         layoutRegisterPage.addClassName("register-form");
         this.registerView = registerView;
         this.userService = userService;
+        this.authenticatedUser = authenticatedUser;
 
         stylingComponentsCss();
         setupPasswordStrengthChecker();
@@ -89,7 +94,6 @@ public class RegisterForm extends VerticalLayout {
         });
 
         btnWeiter.addClickListener(e -> {
-
             btnWeiterFunktion();
         });
     }
@@ -201,7 +205,27 @@ public class RegisterForm extends VerticalLayout {
 
         Span spanAbbrechen = new Span("Sind Sie sicher, dass Sie abbrechen möchten?");
         Button buttonBestaetigenBestaetigung = new Button("Ja", event -> {
-            UI.getCurrent().navigate("login");
+            Optional<User> currentUser = authenticatedUser.get();
+            if (currentUser.isPresent()) {
+                String role = currentUser.get().getRolle();
+                String redirectUrl = "";
+
+                if ("administrator".equalsIgnoreCase(role)) {
+                    redirectUrl = "admin-dashboard";
+                } else if ("geschaeftsfuehrer".equalsIgnoreCase(role)) {
+                    redirectUrl = "geschaeftsfuehrer-dashboard";
+                } else if ("mitarbeiter".equalsIgnoreCase(role)) {
+                    redirectUrl = "mitarbeiter-dashboard";
+                } else if ("mitglied".equalsIgnoreCase(role)) {
+                    redirectUrl = "mitglied-dashboard";
+                } else {
+                    redirectUrl = "login";
+                }
+
+                UI.getCurrent().navigate(redirectUrl);
+            } else {
+                UI.getCurrent().navigate("login");
+            }
             confirmationDialog.close();
         });
 
@@ -237,6 +261,10 @@ public class RegisterForm extends VerticalLayout {
                 || cbSicherheitsfrage.getValue() == null || tfAntwort.getValue().isEmpty()
                 || cbRole.getValue() == null) {
             Notification.show("Bitte füllen Sie alle Felder aus.");
+        } // check if the username already exists
+        else if (userService.userExists(tfBenutzername.getValue())) {
+            Notification.show("Benutzername bereits vergeben. Bitte geben Sie einen anderen an", 1500,
+                    Notification.Position.MIDDLE);
         }
         // check if the username contains spaces
         else if (tfBenutzername.getValue().contains(" ") || tfPasswort.getValue().contains(" ")) {
@@ -250,18 +278,29 @@ public class RegisterForm extends VerticalLayout {
                 || tfBenutzername.getValue().toLowerCase().contains("admin")) {
             Notification.show("Der Benutzername darf nicht 'user', 'master', 'admin', 'test' oder 'root' enthalten.");
         }
-        // Check if the password is at least 8 characters long
+
+        // Check if the role is not mitglied and validate the master password
         else if (!cbRole.getValue().equals(Role.mitglied)) {
-        if (pfMasterPassword.isEmpty()) {
-            Notification.show("Bitte geben Sie das Master-Passwort ein.");
-    }   else if (!userService.verifyMasterPassword(pfMasterPassword.getValue())) {
-            Notification.show("Das Master-Passwort ist falsch.");
-    }   else {
+            if (pfMasterPassword.isEmpty()) {
+                Notification.show("Bitte geben Sie das Master-Passwort ein.");
+            } else if (cbRole.getValue().equals(Role.administrator)
+                    || cbRole.getValue().equals(Role.geschaeftsfuehrer)) {
+                if (!userService.verifyMasterPassword(pfMasterPassword.getValue())) {
+                    Notification.show("Das Master-Passwort ist falsch.");
+                } else {
+                    validateAndCreateUser(passwort);
+                }
+            } else if (cbRole.getValue().equals(Role.mitarbeiter)) {
+                if (!userService.verifyAdminOrGeschaeftsfuehrerPassword(pfMasterPassword.getValue())) {
+                    Notification.show("Das Passwort eines Geschäftsführers oder Admins ist falsch.");
+                } else {
+                    validateAndCreateUser(passwort);
+                }
+            }
+        } else {
             validateAndCreateUser(passwort);
+        }
     }
-}       else {
-            validateAndCreateUser(passwort);
-}}
 
     private void validateAndCreateUser(String passwort) {
         if (passwort.length() < 8 && !passwort.isEmpty() || passwort.length() > 30) {

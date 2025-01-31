@@ -3,7 +3,7 @@ package com.example.demo.security;
 // Author: Delbrin Alazo
 
 // Created: 2024-12-07
-// Last Updated: 2024-12-07
+// Last Updated: 2025-01-31
 // Modified by: Delbrin Alazo
 // Description: Class for handling user details
 

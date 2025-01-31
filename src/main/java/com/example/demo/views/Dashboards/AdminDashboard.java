@@ -1,8 +1,8 @@
-package com.example.demo.views.Dashboards;
+package com.example.demo.views.dashboards;
 // Author: Delbrin Alazo
 
 // Created: 2025-01-14
-// Last Updated: 2025-01-21
+// Last Updated: 2025-01-31
 // Modified by: Delbrin Alazo
 // Description: Admin dashboard view
 
@@ -47,13 +47,17 @@ public class AdminDashboard extends VerticalLayout {
         Button btnTrainingsplaeneVerwalten = new Button(bundle.getString("admin.dashboard.trainingsplaeneVerwalten"),
                 event -> {
                 });
-
+        
         Button btnMitgliederVerwalten = new Button(bundle.getString("admin.dashboard.mitgliederVerwalten"), event -> {
+            UI.getCurrent().navigate("mitglieder-verwalten");
         });
         Button btnMitarbeiterVerwalten = new Button(bundle.getString("admin.dashboard.mitarbeiterVerwalten"), event -> {
+            UI.getCurrent().navigate("mitarbeiter-verwalten");
         });
-        Button btnProfilBearbeiten = new Button(bundle.getString("admin.dashboard.profilBearbeiten"), event -> {
+        Button btnGeschaeftsfuehrerVerwalten = new Button(bundle.getString("admin.dashboard.geschaeftsfuehrerVerwalten"), event -> {
+            UI.getCurrent().navigate("geschaeftsfuehrer-verwalten");
         });
+
         Button btnLogout = new Button(bundle.getString("admin.dashboard.logout"), event -> {
             VaadinSession.getCurrent().getSession().invalidate();
             VaadinSession.getCurrent().close();
@@ -65,7 +69,7 @@ public class AdminDashboard extends VerticalLayout {
         // Create a horizontal layout for the buttons
         HorizontalLayout buttonLayout = new HorizontalLayout(btnUebungenVerwalten, btnGeraeteVerwalten,
                 btnTrainingsplaeneVerwalten,
-                btnMitgliederVerwalten, btnMitarbeiterVerwalten, btnProfilBearbeiten, btnLogout);
+                btnMitgliederVerwalten, btnMitarbeiterVerwalten, btnGeschaeftsfuehrerVerwalten, btnLogout);
         buttonLayout.setAlignItems(Alignment.CENTER);
         buttonLayout.setSpacing(true);
 

@@ -1,8 +1,8 @@
-package com.example.demo.views.Dashboards;
+package com.example.demo.views.dashboards;
 // Author: Delbrin Alazo
 
 // Created: 2025-01-14
-// Last Updated: 2025-01-21
+// Last Updated: 2025-01-31
 // Modified by: Delbrin Alazo
 // Description: Geschaeftsfuehrer dashboard view
 
@@ -36,23 +36,28 @@ public class GeschaeftsfuehrerDashboard extends VerticalLayout {
         }
 
         // Create buttons with I18n texts
-        Button btnUebungenVerwalten = new Button(bundle.getString("geschaeftsfuehrer.dashboard.uebungenVerwalten"), event -> {
-            UI.getCurrent().navigate("manager/uebungen");
-        });
+        Button btnUebungenVerwalten = new Button(bundle.getString("geschaeftsfuehrer.dashboard.uebungenVerwalten"),
+                event -> {
+                    UI.getCurrent().navigate("manager/uebungen");
+                });
 
-        Button btnGeraeteVerwalten = new Button(bundle.getString("geschaeftsfuehrer.dashboard.geraeteVerwalten"), event -> {
-            UI.getCurrent().navigate("manager/geraete");
-        });
+        Button btnGeraeteVerwalten = new Button(bundle.getString("geschaeftsfuehrer.dashboard.geraeteVerwalten"),
+                event -> {
+                    UI.getCurrent().navigate("manager/geraete");
+                });
 
-        Button btnTrainingsplaeneVerwalten = new Button(bundle.getString("geschaeftsfuehrer.dashboard.trainingsplaeneVerwalten"), event -> {
-        });
+        Button btnTrainingsplaeneVerwalten = new Button(
+                bundle.getString("geschaeftsfuehrer.dashboard.trainingsplaeneVerwalten"), event -> {
+                });
 
-        Button btnMitgliederVerwalten = new Button(bundle.getString("geschaeftsfuehrer.dashboard.mitgliederVerwalten"), event -> {
-        });
-        Button btnMitarbeiterVerwalten = new Button(bundle.getString("geschaeftsfuehrer.dashboard.mitarbeiterVerwalten"), event -> {
-        });
-        Button btnProfilBearbeiten = new Button(bundle.getString("geschaeftsfuehrer.dashboard.profilBearbeiten"), event -> {
-        });
+        Button btnMitgliederVerwalten = new Button(bundle.getString("geschaeftsfuehrer.dashboard.mitgliederVerwalten"),
+                event -> {
+                    UI.getCurrent().navigate("mitglieder-verwalten");
+                });
+        Button btnMitarbeiterVerwalten = new Button(
+                bundle.getString("geschaeftsfuehrer.dashboard.mitarbeiterVerwalten"), event -> {
+                    UI.getCurrent().navigate("mitarbeiter-verwalten");
+                });
         Button btnLogout = new Button(bundle.getString("geschaeftsfuehrer.dashboard.logout"), event -> {
             VaadinSession.getCurrent().getSession().invalidate();
             VaadinSession.getCurrent().close();
@@ -62,8 +67,9 @@ public class GeschaeftsfuehrerDashboard extends VerticalLayout {
         btnLogout.getStyle().set("color", "white");
 
         // Create a horizontal layout for the buttons
-        HorizontalLayout buttonLayout = new HorizontalLayout(btnUebungenVerwalten, btnGeraeteVerwalten, btnTrainingsplaeneVerwalten,
-                btnMitgliederVerwalten, btnMitarbeiterVerwalten, btnProfilBearbeiten, btnLogout);
+        HorizontalLayout buttonLayout = new HorizontalLayout(btnUebungenVerwalten, btnGeraeteVerwalten,
+                btnTrainingsplaeneVerwalten,
+                btnMitgliederVerwalten, btnMitarbeiterVerwalten, btnLogout);
         buttonLayout.setAlignItems(Alignment.CENTER);
         buttonLayout.setSpacing(true);
 

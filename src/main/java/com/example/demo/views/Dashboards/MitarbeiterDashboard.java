@@ -1,9 +1,9 @@
-package com.example.demo.views.Dashboards;
+package com.example.demo.views.dashboards;
 
 // Author: Delbrin Alazo
 
 // Created: 2025-01-14
-// Last Updated: 2025-01-21
+// Last Updated: 2025-01-31
 // Modified by: Delbrin Alazo
 // Description: Mitarbeiter dashboard view
 
@@ -51,9 +51,8 @@ public class MitarbeiterDashboard extends VerticalLayout {
 
         Button btnMitgliederVerwalten = new Button(bundle.getString("mitarbeiter.dashboard.mitgliederVerwalten"),
                 event -> {
+                    UI.getCurrent().navigate("mitglieder-verwalten");
                 });
-        Button btnProfilBearbeiten = new Button(bundle.getString("mitarbeiter.dashboard.profilBearbeiten"), event -> {
-        });
         Button btnLogout = new Button(bundle.getString("mitarbeiter.dashboard.logout"), event -> {
             VaadinSession.getCurrent().getSession().invalidate();
             VaadinSession.getCurrent().close();
@@ -65,7 +64,7 @@ public class MitarbeiterDashboard extends VerticalLayout {
         // Create a horizontal layout for the buttons
         HorizontalLayout buttonLayout = new HorizontalLayout(btnUebungenVerwalten, btnGeraeteVerwalten,
                 btnTrainingsplaeneVerwalten,
-                btnMitgliederVerwalten, btnProfilBearbeiten, btnLogout);
+                btnMitgliederVerwalten, btnLogout);
         buttonLayout.setAlignItems(Alignment.CENTER);
         buttonLayout.setSpacing(true);
 

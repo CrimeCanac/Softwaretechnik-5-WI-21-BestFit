@@ -2,7 +2,7 @@ package com.example.demo.views.register;
 
 // Author: Delbrin Alazo
 // Created: 2024-12-07
-// Last Updated: 2024-12-07
+// Last Updated: 2025-01-31
 // Modified by: Delbrin Alazo
 // Description: RegisterView for user registration
 
@@ -15,6 +15,7 @@ import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
+import com.example.demo.security.AuthenticatedUser;
 
 @AnonymousAllowed
 @PageTitle("Registrierung Pflicht")
@@ -29,11 +30,11 @@ public class RegisterView extends VerticalLayout {
     private final Tab tab1;
     private final Tab tab2;
 
-    public RegisterView(@Autowired UserService userService) {
+    public RegisterView(@Autowired UserService userService, @Autowired AuthenticatedUser authenticatedUser) {
         this.userService = userService;
 
-        registerForm = new RegisterForm(this, this.userService);
-        registerFormOpt = new RegisterFormOpt(this, this.userService);
+        registerForm = new RegisterForm(this, this.userService, authenticatedUser);
+        registerFormOpt = new RegisterFormOpt(this, this.userService, authenticatedUser);
 
         tabs = new Tabs();
         tab1 = new Tab("Schritt 1: Grundlegende Informationen");
