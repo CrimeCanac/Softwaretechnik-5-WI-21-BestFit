@@ -50,8 +50,6 @@ public class MitgliedDashboard extends VerticalLayout {
         Button btnTrainingStarten = new Button(bundle.getString("mitglied.dashboard.trainingStarten"), event -> {
             UI.getCurrent().navigate("trainingsplanauswahl");
         });
-        Button btnProfilBearbeiten = new Button(bundle.getString("mitglied.dashboard.profilBearbeiten"), event -> {
-        });
         Button btnLogout = new Button(bundle.getString("mitglied.dashboard.logout"), event -> {
             VaadinSession.getCurrent().getSession().invalidate();
             VaadinSession.getCurrent().close();
@@ -62,7 +60,7 @@ public class MitgliedDashboard extends VerticalLayout {
 
         // Create a horizontal layout for the buttons
         HorizontalLayout buttonLayout = new HorizontalLayout(btnUebungen, btnTrainingsplaene, btnTrainingshistorie,
-                btnTrainingStarten, btnProfilBearbeiten, btnLogout);
+                btnTrainingStarten,btnLogout);
         buttonLayout.setAlignItems(Alignment.CENTER);
         buttonLayout.setSpacing(true);
 
