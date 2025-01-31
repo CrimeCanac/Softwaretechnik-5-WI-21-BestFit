@@ -43,9 +43,29 @@ public class RegisterFormOpt extends VerticalLayout {
         functionForFields();
 
         btSkip.addClickListener(e -> {
-            UI.getCurrent().navigate("login");
+            User currentUser = authenticatedUser.get().orElse(null);
+            if (currentUser != null) {
+                String role = currentUser.getRolle();
+                String redirectUrl = "";
+    
+                if ("administrator".equalsIgnoreCase(role)) {
+                    redirectUrl = "admin-dashboard";
+                } else if ("geschaeftsfuehrer".equalsIgnoreCase(role)) {
+                    redirectUrl = "geschaeftsfuehrer-dashboard";
+                } else if ("mitarbeiter".equalsIgnoreCase(role)) {
+                    redirectUrl = "mitarbeiter-dashboard";
+                } else if ("mitglied".equalsIgnoreCase(role)) {
+                    redirectUrl = "mitglied-dashboard";
+                } else {
+                    redirectUrl = "login";
+                }
+    
+                UI.getCurrent().navigate(redirectUrl);
+            } else {
+                UI.getCurrent().navigate("login");
+                Notification.show("Sie können sich jetzt einloggen.");
+            }
             Notification.show("Profilinformationen wurden übersprungen. Sie können diese später im Profil ergänzen.");
-            Notification.show("Sie können sich jetzt einloggen.");
         });
 
         btSpeichern.addClickListener(e -> {
