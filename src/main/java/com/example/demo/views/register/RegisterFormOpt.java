@@ -22,6 +22,11 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 
 public class RegisterFormOpt extends VerticalLayout {
 
+    private static final double MIN_GROESSE = 100;
+    private static final double MAX_GROESSE = 250;
+    private static final double MIN_GEWICHT = 40;
+    private static final double MAX_GEWICHT = 500;
+
     FormLayout layoutRegisterPage = new FormLayout();
     HorizontalLayout layoutButtons = new HorizontalLayout();
 
@@ -43,28 +48,7 @@ public class RegisterFormOpt extends VerticalLayout {
         functionForFields();
 
         btSkip.addClickListener(e -> {
-            User currentUser = authenticatedUser.get().orElse(null);
-            if (currentUser != null) {
-                String role = currentUser.getRolle();
-                String redirectUrl = "";
-    
-                if ("administrator".equalsIgnoreCase(role)) {
-                    redirectUrl = "admin-dashboard";
-                } else if ("geschaeftsfuehrer".equalsIgnoreCase(role)) {
-                    redirectUrl = "geschaeftsfuehrer-dashboard";
-                } else if ("mitarbeiter".equalsIgnoreCase(role)) {
-                    redirectUrl = "mitarbeiter-dashboard";
-                } else if ("mitglied".equalsIgnoreCase(role)) {
-                    redirectUrl = "mitglied-dashboard";
-                } else {
-                    redirectUrl = "login";
-                }
-    
-                UI.getCurrent().navigate(redirectUrl);
-            } else {
-                UI.getCurrent().navigate("login");
-                Notification.show("Sie können sich jetzt einloggen.");
-            }
+            handleNavigation(authenticatedUser);
             Notification.show("Profilinformationen wurden übersprungen. Sie können diese später im Profil ergänzen.");
         });
 
@@ -75,19 +59,12 @@ public class RegisterFormOpt extends VerticalLayout {
 
     // Styling of components
     private void stylingComponentsCss() {
-
         setWidthFull();
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
 
-        layoutRegisterPage.setResponsiveSteps(
-                new FormLayout.ResponsiveStep("0", 1));
-
-        layoutRegisterPage.getStyle().set("box-shadow", "0 0 10px grey");
-        layoutRegisterPage.getStyle().set("border-radius", "6px");
-        layoutRegisterPage.getStyle().set("padding", "3vh");
-        layoutRegisterPage.getStyle().set("margin", "auto");
-        layoutRegisterPage.getStyle().set("padding-bottom", "20px");
+        layoutRegisterPage.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 1));
+        setComponentStyles();
 
         layoutButtons.add(btSkip, btSpeichern);
         layoutButtons.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
@@ -100,11 +77,11 @@ public class RegisterFormOpt extends VerticalLayout {
         pBeschreibung.setWidth("50%");
         pBeschreibung.getStyle().set("text-align", "center");
 
-        tfGroesse.setMin(100);
-        tfGroesse.setMax(250);
+        tfGroesse.setMin(MIN_GROESSE);
+        tfGroesse.setMax(MAX_GROESSE);
 
-        tfGewicht.setMin(40);
-        tfGewicht.setMax(500);
+        tfGewicht.setMin(MIN_GEWICHT);
+        tfGewicht.setMax(MAX_GEWICHT);
 
         pRegistration.setValue(1);
         pRegistration.setWidth("50%");
@@ -112,8 +89,15 @@ public class RegisterFormOpt extends VerticalLayout {
         btSpeichern.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         layoutRegisterPage.add(pRegistration, header, pBeschreibung, tfGroesse, tfGewicht, layoutButtons);
-
         add(layoutRegisterPage);
+    }
+
+    private void setComponentStyles() {
+        layoutRegisterPage.getStyle().set("box-shadow", "0 0 10px grey");
+        layoutRegisterPage.getStyle().set("border-radius", "6px");
+        layoutRegisterPage.getStyle().set("padding", "3vh");
+        layoutRegisterPage.getStyle().set("margin", "auto");
+        layoutRegisterPage.getStyle().set("padding-bottom", "20px");
     }
 
     // Function for the fields
@@ -125,21 +109,21 @@ public class RegisterFormOpt extends VerticalLayout {
             try {
                 checkGroesse();
             } catch (Exception ex) {
-                tfGroesse.setErrorMessage("Bitte geben Sie eine Größe zwischen 100 und 250 cm ein.");
+                tfGroesse.setErrorMessage("Bitte geben Sie eine Größe zwischen " + MIN_GROESSE + " und " + MAX_GROESSE + " cm ein.");
             }
         });
         tfGewicht.addValueChangeListener(e -> {
             try {
                 checkGewicht();
             } catch (Exception ex) {
-                tfGewicht.setErrorMessage("Bitte geben Sie ein Gewicht zwischen 40 und 500 kg ein.");
+                tfGewicht.setErrorMessage("Bitte geben Sie ein Gewicht zwischen " + MIN_GEWICHT + " und " + MAX_GEWICHT + " kg ein.");
             }
         });
     }
 
     private boolean checkGroesse() {
-        if (tfGroesse.getValue() < 100 || tfGroesse.getValue() > 250 || tfGroesse.isEmpty()) {
-            tfGroesse.setErrorMessage("Bitte geben Sie eine Größe zwischen 100 und 250 cm ein.");
+        if (tfGroesse.getValue() < MIN_GROESSE || tfGroesse.getValue() > MAX_GROESSE || tfGroesse.isEmpty()) {
+            tfGroesse.setErrorMessage("Bitte geben Sie eine Größe zwischen " + MIN_GROESSE + " und " + MAX_GROESSE + " cm ein.");
             return false;
         } else {
             return true;
@@ -147,8 +131,8 @@ public class RegisterFormOpt extends VerticalLayout {
     }
 
     private boolean checkGewicht() {
-        if (tfGewicht.getValue() < 40 || tfGewicht.getValue() > 500 || tfGewicht.isEmpty()) {
-            tfGewicht.setErrorMessage("Bitte geben Sie ein Gewicht zwischen 40 und 500 kg ein.");
+        if (tfGewicht.getValue() < MIN_GEWICHT || tfGewicht.getValue() > MAX_GEWICHT || tfGewicht.isEmpty()) {
+            tfGewicht.setErrorMessage("Bitte geben Sie ein Gewicht zwischen " + MIN_GEWICHT + " und " + MAX_GEWICHT + " kg ein.");
             return false;
         } else {
             return true;
@@ -178,31 +162,35 @@ public class RegisterFormOpt extends VerticalLayout {
 
             userService.update(user);
 
-            // Get the currently authenticated user
-            User currentUser = authenticatedUser.get().orElse(null);
-            if (currentUser != null) {
-                String role = currentUser.getRolle();
-                String redirectUrl = "";
-
-                if ("administrator".equalsIgnoreCase(role)) {
-                    redirectUrl = "admin-dashboard";
-                } else if ("geschaeftsfuehrer".equalsIgnoreCase(role)) {
-                    redirectUrl = "geschaeftsfuehrer-dashboard";
-                } else if ("mitarbeiter".equalsIgnoreCase(role)) {
-                    redirectUrl = "mitarbeiter-dashboard";
-                } else if ("mitglied".equalsIgnoreCase(role)) {
-                    redirectUrl = "mitglied-dashboard";
-                } else {
-                    redirectUrl = "login";
-                }
-
-                UI.getCurrent().navigate(redirectUrl);
-            } else {
-                UI.getCurrent().navigate("login");
-                Notification.show("Sie können sich jetzt einloggen.");
-            }
+            handleNavigation(authenticatedUser);
         } catch (Exception ex) {
             Notification.show("Bitte füllen Sie alle Felder aus oder überspringen Sie.");
+        }
+    }
+
+    // Function to handle navigation based on user role
+    private void handleNavigation(AuthenticatedUser authenticatedUser) {
+        User currentUser = authenticatedUser.get().orElse(null);
+        if (currentUser != null) {
+            String role = currentUser.getRolle();
+            String redirectUrl = "";
+
+            if ("administrator".equalsIgnoreCase(role)) {
+                redirectUrl = "admin-dashboard";
+            } else if ("geschaeftsfuehrer".equalsIgnoreCase(role)) {
+                redirectUrl = "geschaeftsfuehrer-dashboard";
+            } else if ("mitarbeiter".equalsIgnoreCase(role)) {
+                redirectUrl = "mitarbeiter-dashboard";
+            } else if ("mitglied".equalsIgnoreCase(role)) {
+                redirectUrl = "mitglied-dashboard";
+            } else {
+                redirectUrl = "login";
+            }
+
+            UI.getCurrent().navigate(redirectUrl);
+        } else {
+            UI.getCurrent().navigate("login");
+            Notification.show("Sie können sich jetzt einloggen.");
         }
     }
 }

@@ -14,6 +14,7 @@ import com.example.demo.service.UserService;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -52,6 +53,7 @@ public class RegisterForm extends VerticalLayout {
 
     ComboBox<Role> cbRole = new ComboBox<>("Rolle auswählen");
     PasswordField pfMasterPassword = new PasswordField("Masterpasswort");
+    Checkbox cbPremium = new Checkbox("Premium-Mitgliedschaft");
 
     Button btnAbbrechen = new Button("Abbrechen");
     Button btnWeiter = new Button("Weiter");
@@ -79,13 +81,16 @@ public class RegisterForm extends VerticalLayout {
 
         // if role is not mitglied, show master password field
         pfMasterPassword.setVisible(false);
+        cbPremium.setVisible(false);
         cbRole.setItems(Role.values());
         cbRole.addValueChangeListener(event -> {
             Role selectedRole = event.getValue();
             if (selectedRole != null && selectedRole != Role.mitglied) {
                 pfMasterPassword.setVisible(true);
+                cbPremium.setVisible(false);
             } else {
                 pfMasterPassword.setVisible(false);
+                cbPremium.setVisible(true);
             }
         });
 
@@ -191,6 +196,7 @@ public class RegisterForm extends VerticalLayout {
         layoutRegisterPage.add(tfPasswort, tfPasswortBestaetigen);
         layoutRegisterPage.add(cbSicherheitsfrage, tfAntwort);
         layoutRegisterPage.add(cbRole, pfMasterPassword);
+        layoutRegisterPage.add(cbPremium, 2);
         layoutRegisterPage.add(layoutButtons, 2);
 
         add(layoutRegisterPage);
@@ -468,6 +474,7 @@ public class RegisterForm extends VerticalLayout {
         user.setSicherheitsfrage(cbSicherheitsfrage.getValue());
         user.setSicherheitsfrageAntwort(hashedSicherheitsfrageAntwort);
         user.setRolle(cbRole.getValue().name());
+        user.setIsPremium(cbPremium.getValue());
 
         userService.update(user);
     }

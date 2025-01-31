@@ -53,6 +53,9 @@ public class User implements Serializable {
     @Column
     private Double gewichtKg;
 
+    @Column
+    private Boolean isPremium; 
+
     // Getter and Setter
 
     public String getRolle() {
@@ -142,4 +145,13 @@ public class User implements Serializable {
     public void setGewichtKg(Double gewichtKg) {
         this.gewichtKg = gewichtKg;
     }
+
+    public Boolean getIsPremium() {
+        return isPremium;
+    }
+
+    public void setIsPremium(Boolean isPremium) {
+        this.isPremium = isPremium;
+    }
+    
 }
