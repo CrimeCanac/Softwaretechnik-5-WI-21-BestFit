@@ -41,6 +41,7 @@ public class MitgliedDashboard extends VerticalLayout {
 
         // Create buttons with I18n texts
         Button btnUebungen = new Button(bundle.getString("mitglied.dashboard.uebungen"), event -> {
+            UI.getCurrent().navigate("mitglied/uebungen");
         });
         Button btnTrainingsplaene = new Button(bundle.getString("mitglied.dashboard.trainingsplaene"), event -> {
         });
