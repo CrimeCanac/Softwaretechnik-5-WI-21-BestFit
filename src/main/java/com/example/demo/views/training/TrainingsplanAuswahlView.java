@@ -63,7 +63,8 @@ public class TrainingsplanAuswahlView extends VerticalLayout{
             }
         });
         btnExportPdf.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-
+        
+        // Trainingsplan auswählen
         btnChoose.addClickListener(e -> {
             Trainingsplan selectedTrainingsplan = getSelectedTrainingsplan();
             if (selectedTrainingsplan != null) {
@@ -75,6 +76,8 @@ public class TrainingsplanAuswahlView extends VerticalLayout{
                 Notification.show("Bitte wählen Sie einen Trainingsplan aus.", 3000, Notification.Position.MIDDLE);
             }
         });
+
+        // Trainingsplan starten / Abbrechen
         btnStarten.addClickListener(e -> {
             Training selectedTraining = gridTraining.asSingleSelect().getValue();
             if (selectedTraining != null) {
@@ -86,6 +89,8 @@ public class TrainingsplanAuswahlView extends VerticalLayout{
         btnAbbrechen.addClickListener(e -> {
             trainingDialog.close();
         });
+
+        // Filter konfigurieren
         tfFilterName.setLabel("Filtern nach Name");
         tfFilterName.setPlaceholder("Name");
         tfFilterName.setClearButtonVisible(true);
@@ -98,6 +103,8 @@ public class TrainingsplanAuswahlView extends VerticalLayout{
         hlToolbar.setAlignItems(Alignment.BASELINE);
         gridTrainingsplan.setItems(trainingsplanService.getAllTrainingsplaene());
         gridTrainingsplan.setColumns("name", "beschreibung");
+
+        // Dialog konfigurieren
         trainingDialog.setWidth("40%");
         trainingDialog.setHeight("40%");
         trainingDialog.add(gridTraining);

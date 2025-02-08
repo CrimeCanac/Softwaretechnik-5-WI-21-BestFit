@@ -61,7 +61,7 @@ public class TrainingshistorieView extends VerticalLayout{
         this.trainingService = trainingService;
         this.userService = userService;
 
-
+        // Alle Textfelder schreibgeschützt
         tfName.setReadOnly(true);
         tfDauer.setReadOnly(true);
         tfDatum.setReadOnly(true);
@@ -70,6 +70,8 @@ public class TrainingshistorieView extends VerticalLayout{
         tfSumWdh.setReadOnly(true);
         tfSumGewicht.setReadOnly(true);
         tfAvgGewicht.setReadOnly(true);
+
+        // Grid-Konfiguration
         grid.setSelectionMode(Grid.SelectionMode.SINGLE);
         grid.addColumn(training -> training.getTraining().getName())
             .setHeader("Training")
@@ -84,6 +86,7 @@ public class TrainingshistorieView extends VerticalLayout{
         grid.setHeight("auto");
         grid.setMinHeight("500px");
 
+        // Öffnen-Button zum Anzeigen der Details
         btnOpen.addClickListener(e -> {
             if (grid.asSingleSelect().isEmpty()) {
                 Notification.show("Bitte wählen Sie eine Trainingshistorie aus", 3000, Notification.Position.MIDDLE);
@@ -100,6 +103,8 @@ public class TrainingshistorieView extends VerticalLayout{
                 historieDialog.open();
             }
         });
+
+        // Dialog-Konfiguration
         historieDialog.setCloseOnEsc(true);
         historieDialog.setCloseOnOutsideClick(true);
         historieDialog.setResizable(true);

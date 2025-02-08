@@ -89,6 +89,8 @@ public class TrainingView extends VerticalLayout implements BeforeEnterObserver 
             trainingshistorieService.saveTrainingshistorie(th);
             UI.getCurrent().navigate("mitglied-dashboard");
         });
+
+        // Abbrechen, stoppt die Stoppuhr
         btnAbbrechen.addClickListener(e -> {
             stopuhr.stop();
             UI.getCurrent().navigate("trainingsplanauswahl");
@@ -108,9 +110,10 @@ public class TrainingView extends VerticalLayout implements BeforeEnterObserver 
         add(title, stopuhr, new Hr(), vlUebungen, new Hr(),
                 new HorizontalLayout(btnExportPdf, btnBeenden, btnAbbrechen));
     }
-
+    
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
+        // Trainings-ID aus URL abrufen und Training laden
         trainingIDString = event.getRouteParameters().get("trainingID").orElse("");
         setTraining(trainingService.getTrainingById(Long.parseLong(trainingIDString)));
         setUebungen();

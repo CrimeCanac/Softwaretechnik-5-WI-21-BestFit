@@ -76,12 +76,15 @@ public class AdminUebungenView extends VerticalLayout {
 
         add(headerLayout, uebungGrid);
     }
-
+    
+    
+    // Lädt alle Übungen aus der Datenbank
     private void updateGrid() {
         List<Uebung> uebungen = uebungService.alleUebungenAbrufen();
         uebungGrid.setItems(uebungen);
     }
 
+     // Öffnet einen Dialog zur Eingabe einer neuen Übung
     private void openAddUebungDialog() {
         Dialog dialog = new Dialog();
         dialog.setHeaderTitle("Neue Übung hinzufügen");
@@ -141,7 +144,8 @@ public class AdminUebungenView extends VerticalLayout {
         dialog.add(dialogLayout);
         dialog.open();
     }
-
+   
+    //Bearbeiten, Löschen, Details für jede Übung
     private HorizontalLayout createActions(Uebung uebung) {
         Button editButton = new Button();
         editButton.getElement().setProperty("innerHTML", "<i class='fa fa-edit' style='color: #FFA500;'></i>");
@@ -166,6 +170,7 @@ public class AdminUebungenView extends VerticalLayout {
         return actionsLayout;
     }
 
+    // Öffnet einen Dialog zum Bearbeiten der Übung
     private void openEditUebungDialog(Uebung uebung) {
         Dialog dialog = new Dialog();
         dialog.setHeaderTitle("Übung bearbeiten");
@@ -218,7 +223,7 @@ public class AdminUebungenView extends VerticalLayout {
         dialog.add(dialogLayout);
         dialog.open();
     }
-
+   
     private void openDeleteConfirmationDialog(Uebung uebung) {
         Dialog dialog = new Dialog();
         dialog.setHeaderTitle("Übung löschen");

@@ -38,6 +38,7 @@ public class StopuhrView extends VerticalLayout {
         add(zeit, new HorizontalLayout(btnStart, btnPause, btnWeiter, btnReset));
     }
 
+    // Startet die Stoppuhr
     private void start() {
         if (!isRunning && !hasStarted) {
             hasStarted = true;
@@ -60,6 +61,7 @@ public class StopuhrView extends VerticalLayout {
         }    
     }
 
+    // Pausiert die Stoppuhr
     public void stop() {
         if (isRunning && hasStarted) {
             isRunning = false;
@@ -73,7 +75,8 @@ public class StopuhrView extends VerticalLayout {
             btnReset.setVisible(true);
         }
     }
-
+    
+    // Setzt die Stoppuhr fort
     private void weiter() {
         if (!isRunning && hasStarted && isPaused) {
             isRunning = true;
@@ -93,7 +96,8 @@ public class StopuhrView extends VerticalLayout {
             btnReset.setVisible(true);
         }
     }
-
+   
+    // Setzt die Stoppuhr zurück
     private void reset() {
         isRunning = false;
         hasStarted = false;

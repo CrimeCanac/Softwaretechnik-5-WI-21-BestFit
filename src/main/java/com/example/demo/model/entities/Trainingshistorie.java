@@ -68,7 +68,8 @@ public class Trainingshistorie {
     public void setDauer_string(String dauer_string) {
         this.dauer_string = dauer_string;
     }
-
+    
+    //Setzt Dauer, konvertiert String
     public void setDauerByString(String dauer_string) {
         String[] parts = dauer_string.split(":");
         int hours = Integer.parseInt(parts[0]);
@@ -102,6 +103,7 @@ public class Trainingshistorie {
         return sumGewicht;
     }
 
+    //Durchschnittliche Gewicht pro Wiederholung
     public int getAvgGewicht() {
         if(sumWdh == 0) {
             return (int)sumGewicht / 1;

@@ -67,6 +67,7 @@ public class AdminLayout extends AppLayout {
         Div drawer = new Div();
         drawer.addClassName("drawer");
 
+        //Menüeinträge
         VerticalLayout menu = new VerticalLayout();
         menu.add(createDrawerMenuItem("Profile", "/admin/profile"));
         menu.add(createDrawerMenuItem("Mitglieder", "/admin/members"));
@@ -88,8 +89,10 @@ public class AdminLayout extends AppLayout {
 
     private void toggleDrawer() {
         if (isDrawerOpen) {
+            //Drawer ausbelenden
             UI.getCurrent().getPage().executeJs("document.querySelector('.drawer').style.left = '-250px'");
         } else {
+            //Drawer einblenden
             UI.getCurrent().getPage().executeJs("document.querySelector('.drawer').style.left = '0'");
         }
         isDrawerOpen = !isDrawerOpen;
