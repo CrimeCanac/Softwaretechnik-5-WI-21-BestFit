@@ -1,5 +1,7 @@
 package com.example.demo.views.training;
 
+//Author: Ömer Yalcinkaya
+
 import com.example.demo.model.entities.Trainingshistorie;
 import com.example.demo.service.TrainingshistorieService;
 import com.vaadin.flow.component.ClientCallable;

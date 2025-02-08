@@ -1,5 +1,7 @@
 package com.example.demo.model.repositories;
 
+//Author: Ömer Yalcinkaya
+
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;

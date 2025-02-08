@@ -1,5 +1,7 @@
 package com.example.demo.model.entities;
 
+//Author: Ömer Yalcinkaya
+
 import java.util.*;
 
 import jakarta.persistence.*;

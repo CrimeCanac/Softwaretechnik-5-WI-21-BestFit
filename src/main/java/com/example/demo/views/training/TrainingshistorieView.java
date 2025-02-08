@@ -1,5 +1,7 @@
 package com.example.demo.views.training;
 
+//Author: Ömer Yalcinkaya
+
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;

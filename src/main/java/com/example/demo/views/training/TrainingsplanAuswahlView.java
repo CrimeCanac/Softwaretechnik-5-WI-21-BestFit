@@ -1,5 +1,7 @@
 package com.example.demo.views.training;
 
+//Author: Ömer Yalcinkaya
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.demo.model.entities.Training;
