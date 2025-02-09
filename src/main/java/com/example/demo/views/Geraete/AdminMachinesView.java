@@ -1,7 +1,7 @@
 package com.example.demo.views.Geraete;
 
 
-//Author: Fabian Müller
+//Author: Fabian Müller, Ömer Yalcinkaya
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
