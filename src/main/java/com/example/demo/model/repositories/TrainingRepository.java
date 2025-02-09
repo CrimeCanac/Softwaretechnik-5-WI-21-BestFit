@@ -1,6 +1,6 @@
 package com.example.demo.model.repositories;
 
-//Author: Fabian Müller
+//Author: Ömer Yalcinkaya
 
 import java.util.*;
 
