@@ -20,6 +20,14 @@
         <vaadin.version>24.5.5</vaadin.version>
     </properties>
 
+
+
+
+    <!-- Dependencys gepflegt von Delbrin Alazo -->
+
+
+
+
     <dependencies>
         <!-- Spring Boot dependencies -->
         <dependency>

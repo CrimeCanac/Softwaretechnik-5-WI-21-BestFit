@@ -4,7 +4,7 @@ package com.example.demo.views.login;
 // Created: 2024-12-08
 // Last Updated: 2024-12-08
 // Modified by: Delbrin Alazo
-// Description: Class for hashing passwords
+// Description: Class for storing hashing passwords
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
