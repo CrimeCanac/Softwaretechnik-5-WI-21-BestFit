@@ -12,5 +12,5 @@ public enum Muskelgruppe {
     Schulter,
     Trizeps,
     Bizeps,
-    Nacken;
-}
+    Nacken; 
+} 

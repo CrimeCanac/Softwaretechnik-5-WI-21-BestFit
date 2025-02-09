@@ -91,7 +91,7 @@ public class UserService {
 
     public boolean verifyAdminOrGeschaeftsfuehrerPassword(String password) {
         List<User> adminsAndGeschaeftsfuehrer = repository.findAll().stream()
-                .filter(user -> user.getRolle().equals("admin") || user.getRolle().equals("geschaeftsfuehrer"))
+                .filter(user -> user.getRolle().equals("administrator") || user.getRolle().equals("geschaeftsfuehrer"))
                 .collect(Collectors.toList());
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();

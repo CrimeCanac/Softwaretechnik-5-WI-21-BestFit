@@ -9,21 +9,21 @@ package com.example.demo.model.enums;
 
 public enum Sicherheitsfrage {
 
-    GEBURTSORT,
-    MUTTER_MAIDEN_NAME,
-    LIEBLINGSLEHRER,
-    LIEBLINGSBUCH;
+    geburtsort,
+    mutter_maiden_name,
+    lieblingslehrer,
+    lieblingsbuch;
 
     public static String enumToString(Sicherheitsfrage e) {
         switch (e) {
-            case GEBURTSORT:
+            case geburtsort:
                 return "In welcher Stadt sind Sie geboren?";
-            case MUTTER_MAIDEN_NAME:
+            case mutter_maiden_name:
                 return "Wie lautet der Geburtsname Ihrer Mutter?";
-            case LIEBLINGSLEHRER:
-                return "Wie hieß Ihr Lieblingslehrer?";
-            case LIEBLINGSBUCH:
-                return "Was ist Ihr Lieblingsbuch?";
+            case lieblingslehrer:
+                return "Wie hieß Ihr lieblingslehrer?";
+            case lieblingsbuch:
+                return "Was ist Ihr lieblingsbuch?";
             default:
                 return "Unbekannt";
         }
@@ -32,13 +32,13 @@ public enum Sicherheitsfrage {
     public static Sicherheitsfrage stringToEnum(String s) {
         switch (s) {
             case "In welcher Stadt sind Sie geboren?":
-                return GEBURTSORT;
+                return geburtsort;
             case "Wie lautet der Geburtsname Ihrer Mutter?":
-                return MUTTER_MAIDEN_NAME;
-            case "Wie hieß Ihr Lieblingslehrer?":
-                return LIEBLINGSLEHRER;
-            case "Was ist Ihr Lieblingsbuch?":
-                return LIEBLINGSBUCH;
+                return mutter_maiden_name;
+            case "Wie hieß Ihr lieblingslehrer?":
+                return lieblingslehrer;
+            case "Was ist Ihr lieblingsbuch?":
+                return lieblingsbuch;
             default:
                 throw new IllegalArgumentException("Unbekannt");
         }
