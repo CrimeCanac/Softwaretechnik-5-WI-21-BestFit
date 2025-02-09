@@ -2,7 +2,7 @@ package com.example.demo.views.register;
 
 // Author: Delbrin Alazo
 // Created: 2024-12-07
-// Last Updated: 2025-01-31
+// Last Updated: 2025-02-09
 // Modified by: Delbrin Alazo
 // Description: Register form for user registration main registration form
 
@@ -34,7 +34,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import java.util.Optional;
-
 
 public class RegisterForm extends VerticalLayout {
 
@@ -266,15 +265,15 @@ public class RegisterForm extends VerticalLayout {
                 || tfPasswortBestaetigen.getValue().isEmpty()
                 || cbSicherheitsfrage.getValue() == null || tfAntwort.getValue().isEmpty()
                 || cbRole.getValue() == null) {
-            Notification.show("Bitte füllen Sie alle Felder aus.");
+            Notification.show("Bitte füllen Sie alle Felder aus", 1000, Notification.Position.MIDDLE);
         } // check if the username already exists
         else if (userService.userExists(tfBenutzername.getValue())) {
-            Notification.show("Benutzername bereits vergeben. Bitte geben Sie einen anderen an", 1500,
+            Notification.show("Benutzername bereits vergeben. Bitte geben Sie einen anderen an", 1000,
                     Notification.Position.MIDDLE);
         }
         // check if the username contains spaces
         else if (tfBenutzername.getValue().contains(" ") || tfPasswort.getValue().contains(" ")) {
-            Notification.show("Leerzeichen sind nicht erlaubt.");
+            Notification.show("Leerzeichen sind nicht erlaubt im Benutzername", 1000, Notification.Position.MIDDLE);
         }
         // check if the username contains "user", "admin", "test" or "root"
         else if (tfBenutzername.getValue().toLowerCase().contains("user")
@@ -282,7 +281,8 @@ public class RegisterForm extends VerticalLayout {
                 || tfBenutzername.getValue().toLowerCase().contains("test")
                 || tfBenutzername.getValue().toLowerCase().contains("root")
                 || tfBenutzername.getValue().toLowerCase().contains("admin")) {
-            Notification.show("Der Benutzername darf nicht 'user', 'master', 'admin', 'test' oder 'root' enthalten.");
+            Notification.show("Der Benutzername darf nicht 'user', 'master', 'admin', 'test' oder 'root' enthalten.",
+                    1000, Notification.Position.MIDDLE);
         }
 
         // Check if the role is not mitglied and validate the master password
@@ -292,13 +292,13 @@ public class RegisterForm extends VerticalLayout {
             } else if (cbRole.getValue().equals(Role.administrator)
                     || cbRole.getValue().equals(Role.geschaeftsfuehrer)) {
                 if (!userService.verifyMasterPassword(pfMasterPassword.getValue())) {
-                    Notification.show("Das Master-Passwort ist falsch.");
+                    Notification.show("Master Passwort ist falsch", 1000, Notification.Position.MIDDLE);
                 } else {
                     validateAndCreateUser(passwort);
                 }
             } else if (cbRole.getValue().equals(Role.mitarbeiter)) {
                 if (!userService.verifyAdminOrGeschaeftsfuehrerPassword(pfMasterPassword.getValue())) {
-                    Notification.show("Das Passwort eines Geschäftsführers oder Admins ist falsch.");
+                    Notification.show("Master/Geschäftsführer Passwort ist falsch", 1000, Notification.Position.MIDDLE);
                 } else {
                     validateAndCreateUser(passwort);
                 }

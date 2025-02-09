@@ -1,6 +1,5 @@
 package com.example.demo.views.Geraete;
 
-
 //Author: Fabian Müller, Ömer Yalcinkaya
 
 import com.vaadin.flow.component.button.Button;
