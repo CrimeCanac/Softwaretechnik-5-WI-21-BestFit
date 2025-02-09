@@ -49,7 +49,8 @@ public class RegisterFormOpt extends VerticalLayout {
 
         btSkip.addClickListener(e -> {
             handleNavigation(authenticatedUser);
-            Notification.show("Profilinformationen wurden übersprungen. Sie können diese später im Profil ergänzen.");
+            Notification.show("Profilinformationen wurden übersprungen. Sie können diese später im Profil ergänzen.",
+                    1000, Notification.Position.MIDDLE);
         });
 
         btSpeichern.addClickListener(e -> {
@@ -109,21 +110,24 @@ public class RegisterFormOpt extends VerticalLayout {
             try {
                 checkGroesse();
             } catch (Exception ex) {
-                tfGroesse.setErrorMessage("Bitte geben Sie eine Größe zwischen " + MIN_GROESSE + " und " + MAX_GROESSE + " cm ein.");
+                tfGroesse.setErrorMessage(
+                        "Bitte geben Sie eine Größe zwischen " + MIN_GROESSE + " und " + MAX_GROESSE + " cm ein.");
             }
         });
         tfGewicht.addValueChangeListener(e -> {
             try {
                 checkGewicht();
             } catch (Exception ex) {
-                tfGewicht.setErrorMessage("Bitte geben Sie ein Gewicht zwischen " + MIN_GEWICHT + " und " + MAX_GEWICHT + " kg ein.");
+                tfGewicht.setErrorMessage(
+                        "Bitte geben Sie ein Gewicht zwischen " + MIN_GEWICHT + " und " + MAX_GEWICHT + " kg ein.");
             }
         });
     }
 
     private boolean checkGroesse() {
         if (tfGroesse.getValue() < MIN_GROESSE || tfGroesse.getValue() > MAX_GROESSE || tfGroesse.isEmpty()) {
-            tfGroesse.setErrorMessage("Bitte geben Sie eine Größe zwischen " + MIN_GROESSE + " und " + MAX_GROESSE + " cm ein.");
+            tfGroesse.setErrorMessage(
+                    "Bitte geben Sie eine Größe zwischen " + MIN_GROESSE + " und " + MAX_GROESSE + " cm ein.");
             return false;
         } else {
             return true;
@@ -132,7 +136,8 @@ public class RegisterFormOpt extends VerticalLayout {
 
     private boolean checkGewicht() {
         if (tfGewicht.getValue() < MIN_GEWICHT || tfGewicht.getValue() > MAX_GEWICHT || tfGewicht.isEmpty()) {
-            tfGewicht.setErrorMessage("Bitte geben Sie ein Gewicht zwischen " + MIN_GEWICHT + " und " + MAX_GEWICHT + " kg ein.");
+            tfGewicht.setErrorMessage(
+                    "Bitte geben Sie ein Gewicht zwischen " + MIN_GEWICHT + " und " + MAX_GEWICHT + " kg ein.");
             return false;
         } else {
             return true;
@@ -144,14 +149,14 @@ public class RegisterFormOpt extends VerticalLayout {
             AuthenticatedUser authenticatedUser) {
         try {
             if (tfGroesse.isEmpty() || tfGewicht.isEmpty()) {
-                Notification.show("Bitte füllen Sie alle Felder aus oder überspringen Sie.");
+                Notification.show("Bitte füllen Sie alle Felder aus oder überspringen Sie.", 1000,
+                        Notification.Position.MIDDLE);
                 return;
             } else if (!checkGroesse() || !checkGewicht()) {
-                Notification.show("Bitte geben Sie korrekte Werte ein.");
+                Notification.show("Bitte geben Sie korrekte Werte ein.", 1000, Notification.Position.MIDDLE);
                 return;
             }
-
-            Notification.show("Profilinformationen wurden gespeichert.");
+            Notification.show("Profilinformationen wurden gespeichert.", 1000, Notification.Position.MIDDLE);
 
             // get the user from the form
             User user = registerView.getUserFormRegisterForm();
@@ -164,7 +169,8 @@ public class RegisterFormOpt extends VerticalLayout {
 
             handleNavigation(authenticatedUser);
         } catch (Exception ex) {
-            Notification.show("Bitte füllen Sie alle Felder aus oder überspringen Sie.");
+            Notification.show("Bitte füllen Sie alle Felder aus oder überspringen Sie.", 1000,
+                    Notification.Position.MIDDLE);
         }
     }
 
@@ -190,7 +196,7 @@ public class RegisterFormOpt extends VerticalLayout {
             UI.getCurrent().navigate(redirectUrl);
         } else {
             UI.getCurrent().navigate("login");
-            Notification.show("Sie können sich jetzt einloggen.");
+            Notification.show("Sie können sich jetzt einloggen", 1000, Notification.Position.MIDDLE);
         }
     }
 }
