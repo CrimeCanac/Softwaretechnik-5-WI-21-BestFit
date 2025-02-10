@@ -2,7 +2,7 @@ package com.example.demo.views.register;
 
 // Author: Delbrin Alazo
 // Created: 2024-12-07
-// Last Updated: 2025-01-31
+// Last Updated: 2025-02-
 // Modified by: Delbrin Alazo
 // Description: register form optional for additional user information
 
