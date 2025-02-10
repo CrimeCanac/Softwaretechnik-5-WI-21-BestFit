@@ -1,10 +1,11 @@
-package com.example.demo.views.Test;
+package com.example.demo.views.dashboards;
+
 // Author: Delbrin Alazo
 
 // Created: 2025-01-14
 // Last Updated: 2025-01-31
 // Modified by: Delbrin Alazo
-// Description: Geschaeftsfuehrer dashboard view
+// Description: Mitarbeiter dashboard view
 
 import jakarta.annotation.security.RolesAllowed;
 import com.vaadin.flow.component.UI;
@@ -20,12 +21,12 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-@PageTitle("Geschaeftsfuehrer Dashboard")
-@Route(value = "geschaeftsfuehrer-dashboard")
-@RolesAllowed("GESCHAEFTSFUEHRER")
-public class GeschaeftsfuehrerDashboard extends VerticalLayout {
+@PageTitle("Mitarbeiter Dashboard")
+@Route(value = "mitarbeiter-dashboard")
+@RolesAllowed("MITARBEITER")
+public class MitarbeiterDashboard extends VerticalLayout {
 
-    public GeschaeftsfuehrerDashboard() {
+    public MitarbeiterDashboard() {
         // Load I18n texts
         ResourceBundle bundle;
         try {
@@ -36,29 +37,23 @@ public class GeschaeftsfuehrerDashboard extends VerticalLayout {
         }
 
         // Create buttons with I18n texts
-        Button btnUebungenVerwalten = new Button(bundle.getString("geschaeftsfuehrer.dashboard.uebungenVerwalten"),
-                event -> {
-                    UI.getCurrent().navigate("manager/uebungen");
-                });
+        Button btnUebungenVerwalten = new Button(bundle.getString("mitarbeiter.dashboard.uebungenVerwalten"), event -> {
+            UI.getCurrent().navigate("admin/uebungen");
+        });
 
-        Button btnGeraeteVerwalten = new Button(bundle.getString("geschaeftsfuehrer.dashboard.geraeteVerwalten"),
-                event -> {
-                    UI.getCurrent().navigate("manager/geraete");
-                });
+        Button btnGeraeteVerwalten = new Button(bundle.getString("mitarbeiter.dashboard.geraeteVerwalten"), event -> {
+            UI.getCurrent().navigate("admin/geraete");
+        });
 
         Button btnTrainingsplaeneVerwalten = new Button(
-                bundle.getString("geschaeftsfuehrer.dashboard.trainingsplaeneVerwalten"), event -> {
+                bundle.getString("mitarbeiter.dashboard.trainingsplaeneVerwalten"), event -> {
                 });
 
-        Button btnMitgliederVerwalten = new Button(bundle.getString("geschaeftsfuehrer.dashboard.mitgliederVerwalten"),
+        Button btnMitgliederVerwalten = new Button(bundle.getString("mitarbeiter.dashboard.mitgliederVerwalten"),
                 event -> {
                     UI.getCurrent().navigate("mitglieder-verwalten");
                 });
-        Button btnMitarbeiterVerwalten = new Button(
-                bundle.getString("geschaeftsfuehrer.dashboard.mitarbeiterVerwalten"), event -> {
-                    UI.getCurrent().navigate("mitarbeiter-verwalten");
-                });
-        Button btnLogout = new Button(bundle.getString("geschaeftsfuehrer.dashboard.logout"), event -> {
+        Button btnLogout = new Button(bundle.getString("mitarbeiter.dashboard.logout"), event -> {
             VaadinSession.getCurrent().getSession().invalidate();
             VaadinSession.getCurrent().close();
             getUI().ifPresent(ui -> ui.navigate("login"));
@@ -69,12 +64,12 @@ public class GeschaeftsfuehrerDashboard extends VerticalLayout {
         // Create a horizontal layout for the buttons
         HorizontalLayout buttonLayout = new HorizontalLayout(btnUebungenVerwalten, btnGeraeteVerwalten,
                 btnTrainingsplaeneVerwalten,
-                btnMitgliederVerwalten, btnMitarbeiterVerwalten, btnLogout);
+                btnMitgliederVerwalten, btnLogout);
         buttonLayout.setAlignItems(Alignment.CENTER);
         buttonLayout.setSpacing(true);
 
         // Add title and button layout to the main layout
-        H1 title = new H1(bundle.getString("geschaeftsfuehrer.dashboard.title"));
+        H1 title = new H1(bundle.getString("mitarbeiter.dashboard.title"));
         title.getStyle().set("user-select", "none");
         title.getStyle().set("pointer-events", "none");
 

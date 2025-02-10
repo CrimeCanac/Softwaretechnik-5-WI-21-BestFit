@@ -1,4 +1,4 @@
-package com.example.demo.views.Test;
+package com.example.demo.views.dashboards;
 // Author: Delbrin Alazo
 
 // Created: 2025-01-31
