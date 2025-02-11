@@ -35,6 +35,8 @@ public class TrainingsplanAuswahlView extends VerticalLayout{
 
 	private TrainingsplanService trainingsplanService;
     private TrainingService trainingService;
+
+    //UI-Komponente
     private VerticalLayout vlGrid = new VerticalLayout();
     private Grid<Trainingsplan> gridTrainingsplan = new Grid<>(Trainingsplan.class, false);
     private HorizontalLayout hlToolbar = new HorizontalLayout();
@@ -42,6 +44,8 @@ public class TrainingsplanAuswahlView extends VerticalLayout{
     private Button btnChoose = new Button("Trainingsplan auswählen");
     private Button btnExportPdf = new Button("PDF Exportieren", VaadinIcon.FILE_TEXT.create());
     private HorizontalLayout hlButtons_Trainingsplan = new HorizontalLayout(btnChoose, btnExportPdf);
+
+    //Dialog zur Auswahl Trainings
     private Dialog trainingDialog = new Dialog();
     private Grid<Training> gridTraining = new Grid<>(Training.class, false);
     private Button btnStarten = new Button("Training starten");
@@ -99,6 +103,7 @@ public class TrainingsplanAuswahlView extends VerticalLayout{
             gridTrainingsplan.setItems(
                 trainingsplanService.filterTrainingsplanByName(tfFilterName.getValue()));
         });
+        // UI-Elemente zusammenfügen
         hlToolbar.add(tfFilterName);
         hlToolbar.setAlignItems(Alignment.BASELINE);
         gridTrainingsplan.setItems(trainingsplanService.getAllTrainingsplaene());
@@ -113,6 +118,8 @@ public class TrainingsplanAuswahlView extends VerticalLayout{
         trainingDialog.setCloseOnOutsideClick(false);
         trainingDialog.setModal(true);
         trainingDialog.setHeaderTitle("Training auswählen");
+
+        // Layout-Anpassungen
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
         vlGrid.setWidth("50%");
@@ -126,6 +133,7 @@ public class TrainingsplanAuswahlView extends VerticalLayout{
         add(vlGrid, hlButtons_Trainingsplan, trainingDialog);
     }
 
+    // Gibt den aktuell ausgewählten Trainingsplan zurück
     public Trainingsplan getSelectedTrainingsplan() {
         return gridTrainingsplan.asSingleSelect().getValue();
     }

@@ -76,11 +76,14 @@ public class TrainingView extends VerticalLayout implements BeforeEnterObserver 
         btnExportPdf.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         // Event-Handler für andere Buttons Modified von Delbrin Alazo
+        // Beendet und speichert das Training in der Historie
         btnBeenden.addClickListener(e -> {
             Trainingshistorie th = new Trainingshistorie();
+            String dauer = stopuhr.getTimerCurrentTime();
             stopuhr.stop();
             stopuhr.syncTimeAndUpdateBackend(th, trainingshistorieService);
             th.setTraining(training);
+            th.setDauerByString(dauer);
             th.setSumGewicht(getSumGewicht());
             th.setSumSaetze(getSumSaetze());
             th.setSumWdh(getSumWdh());
@@ -123,14 +126,17 @@ public class TrainingView extends VerticalLayout implements BeforeEnterObserver 
         }
     }
 
+    // Lädt die Übungen für das aktuelle Training
     public void setUebungen() {
         uebungen = training.getUebungen();
     }
 
+    // Setzt das aktuelle Training
     public void setTraining(Training training) {
         this.training = training;
     }
 
+    // Erstellt Layouts für die Übungen
     private void setLayouts() {
         if (uebungen == null || uebungen.isEmpty()) {
             H2 h2 = new H2("Keine Übungen vorhanden");
@@ -145,10 +151,12 @@ public class TrainingView extends VerticalLayout implements BeforeEnterObserver 
         }
     }
 
+    // Berechnet die Anzahl der Übungen im Training
     public int getSumUebungen() {
         return uebungen.size();
     }
 
+    // Berechnet die Gesamtanzahl der Sätze aller Übungen
     public int getSumSaetze() {
         int sum = 0;
         for (VerticalLayout x : uebungComponents) {
@@ -158,6 +166,7 @@ public class TrainingView extends VerticalLayout implements BeforeEnterObserver 
         return sum;
     }
 
+    // Berechnet die Gesamtanzahl der Wiederholungen aller Übungen
     public int getSumWdh() {
         int sum = 0;
         for (VerticalLayout x : uebungComponents) {
@@ -167,6 +176,7 @@ public class TrainingView extends VerticalLayout implements BeforeEnterObserver 
         return sum;
     }
 
+    // Berechnet das Gesamtgewicht aller Übungen
     public double getSumGewicht() {
         int sum = 0;
         for (VerticalLayout x : uebungComponents) {

@@ -22,6 +22,7 @@ public class StopuhrView extends VerticalLayout {
     private boolean isRunning = false;
     private boolean isPaused = false;
 
+    // Konstruktor
     public StopuhrView() {
         btnStart.addClickListener(e -> start());
         btnStart.addThemeVariants(ButtonVariant.LUMO_SUCCESS, ButtonVariant.LUMO_PRIMARY);
@@ -31,9 +32,12 @@ public class StopuhrView extends VerticalLayout {
         btnWeiter.addThemeVariants(ButtonVariant.LUMO_SUCCESS, ButtonVariant.LUMO_PRIMARY);
         btnReset.addClickListener(e -> reset());
         btnReset.addThemeVariants(ButtonVariant.LUMO_ERROR, ButtonVariant.LUMO_PRIMARY);
+
+        // Standardmäßig einige Buttons ausblenden
         btnPause.setVisible(false);
         btnWeiter.setVisible(false);
         btnReset.setVisible(false);
+
         setAlignItems(Alignment.CENTER);
         add(zeit, new HorizontalLayout(btnStart, btnPause, btnWeiter, btnReset));
     }
@@ -114,7 +118,7 @@ public class StopuhrView extends VerticalLayout {
         btnReset.setVisible(false);
     }
 
-    // Diese Methode wird verwendet, um die Zeit zu synchronisieren, wenn das Training beendet wird
+    // Synchronisiert die Zeit mit dem Backend und speichert die Trainingshistorie
     public void syncTimeAndUpdateBackend(Trainingshistorie th, TrainingshistorieService trainingshistorieService) {
         getElement().executeJs("return this.querySelector('h3').innerText;")
             .then(String.class, time -> {
@@ -122,15 +126,17 @@ public class StopuhrView extends VerticalLayout {
                 System.out.println("Zeit an das Backend gesendet: " + time);
                 zeit.setText(time);
                 th.setDauerByString(time);
-                trainingshistorieService.saveTrainingshistorie(th);
+                trainingshistorieService.saveTrainingshistorie(th); 
             });
         
     }
 
+    
     public String getTimerCurrentTime() {
         return zeit.getText(); // Gib den aktuellen Wert zurück
     }
 
+    // Berechnet die Zeit in Sekunden
     public int getTimerLengthInSeconds() {
         String[] time = getTimerCurrentTime().split(":");
         int hours = Integer.parseInt(time[0]);
@@ -139,14 +145,17 @@ public class StopuhrView extends VerticalLayout {
         return hours * 3600 + minutes * 60 + seconds;
     }
 
+    // Gibt die Stunden der aktuellen Stoppuhrzeit zurück
     public int getTimerHours() {
         return Integer.parseInt(getTimerCurrentTime().split(":")[0]);
     }
 
+    // Gibt die Minuten der aktuellen Stoppuhrzeit zurück
     public int getTimerMinutes() {
         return Integer.parseInt(getTimerCurrentTime().split(":")[1]);
     }
 
+    // Gibt die Sekunden der aktuellen Stoppuhrzeit zurück
     public int getTimerSeconds() {
         return Integer.parseInt(getTimerCurrentTime().split(":")[2]);
     }

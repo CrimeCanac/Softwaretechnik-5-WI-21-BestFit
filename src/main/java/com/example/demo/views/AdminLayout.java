@@ -33,6 +33,7 @@ public class AdminLayout extends AppLayout {
         addToDrawer(drawer);
     }
 
+    // Erstellt den Header-Bereich mit Logo, Menü-Button und Logout-Button
     private Div createHeader() {
         Div header = new Div();
         header.addClassName("header");
@@ -54,6 +55,7 @@ public class AdminLayout extends AppLayout {
         logoutButton.getStyle().set("background-color", "#FF0000"); // Roter Hintergrund
         logoutButton.getStyle().set("color", "white");
 
+        // Header-Layout anordnen
         HorizontalLayout headerLayout = new HorizontalLayout(hamburgerMenuButton, logo,adminViewLabel, logoutButton);
         headerLayout.setAlignItems(FlexComponent.Alignment.CENTER);
         headerLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.BETWEEN);
@@ -64,6 +66,8 @@ public class AdminLayout extends AppLayout {
     }
 
     private Div createDrawer() {
+
+        // Erstellt das Seitenmenü (Drawer) mit Navigationseinträgen
         Div drawer = new Div();
         drawer.addClassName("drawer");
 
@@ -81,12 +85,14 @@ public class AdminLayout extends AppLayout {
         return drawer;
     }
 
+    // Erstellt einzelne Menüeinträge für das Seitenmenü
     private Anchor createDrawerMenuItem(String text, String route) {
         Anchor menuItem = new Anchor(route, text);
         menuItem.addClassName("drawer-menu-item");
         return menuItem;
     }
 
+    // Öffnet oder schließt das Seitenmenü (Drawer)
     private void toggleDrawer() {
         if (isDrawerOpen) {
             //Drawer ausbelenden

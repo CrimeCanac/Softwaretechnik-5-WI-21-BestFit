@@ -12,23 +12,31 @@ public class Trainingshistorie {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "training_seq")
     @SequenceGenerator(name = "training_seq", sequenceName = "training_seq", initialValue = 100)
     private long id;
+
     private LocalDateTime datum;
     private int dauer_sek;
     private LocalTime dauer_zeit;
     private String dauer_string;
+
     private int sumSaetze;
     private int sumWdh;
     private double sumGewicht;
     private int sumUebungen;
+
+    // Beziehung zum Training (Many-to-One)
     @ManyToOne (fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Training training;
+
+    // Beziehung zum Benutzer (Many-to-One)
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private User user;
 
+    // Konstruktor setzt aktuelles Datum
     public Trainingshistorie() {
         this.datum = LocalDateTime.now();
     }
 
+    // Getter & Setter
     public Training getTraining() {
         return training;
     }
@@ -69,7 +77,7 @@ public class Trainingshistorie {
         this.dauer_string = dauer_string;
     }
     
-    //Setzt Dauer, konvertiert String
+    //Setzt Dauer, konvertiert String (Format: HH:mm:ss)
     public void setDauerByString(String dauer_string) {
         String[] parts = dauer_string.split(":");
         int hours = Integer.parseInt(parts[0]);

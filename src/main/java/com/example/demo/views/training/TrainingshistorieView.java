@@ -39,11 +39,14 @@ public class TrainingshistorieView extends VerticalLayout{
     private TrainingshistorieService trainingshistorieService;
     private TrainingService trainingService;
     private UserService userService;
+
     private H2 title = new H2("Trainingshistorie");
     private Grid<Trainingshistorie> grid = new Grid<>(Trainingshistorie.class, false);
     private Button btnOpen = new Button("Trainingshistorie öffnen");
     private HorizontalLayout hlButtons = new HorizontalLayout(btnOpen);
     private Dialog historieDialog = new Dialog();
+
+    // Textfelder für Trainingsdetails
     private TextField tfName = new TextField("Name");
     private TextField tfDauer = new TextField("Dauer");
     private TextField tfDatum = new TextField("Datum");
@@ -111,6 +114,8 @@ public class TrainingshistorieView extends VerticalLayout{
         historieDialog.setDraggable(false);
         historieDialog.add(vlDialogLayout);
         historieDialog.getFooter().add(new Button("Schließen", e -> historieDialog.close()));
+
+        // Layout Einstellungen
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
         setWidth("60%");
